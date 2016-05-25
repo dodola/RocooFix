@@ -1,0 +1,35 @@
+apply plugin: 'com.android.application'
+apply plugin: com.dodola.rocoofix.RocooFixPlugin
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        applicationId "com.dodola.rocoosample"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 2
+        versionName "2.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+rocoo_fix {
+//    includePackageNames = ['com/dodola/rocoo/HelloHack.class']
+    preVersionPath = '1'
+    enable = true
+
+}
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+}
