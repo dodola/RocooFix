@@ -9,6 +9,6 @@ package com.dodola.rocoosample;
 public class HelloHack {
 
     public String showHello() {
-        return "hello hack";
+        return "hello world";
     }
 }

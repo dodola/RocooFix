@@ -8402,6 +8402,40 @@ android.support.v7.widget.ViewUtils -> android.support.v7.widget.dv:
     void computeFitSystemWindows(android.view.View,android.graphics.Rect,android.graphics.Rect) -> a
     void makeOptionalFitsSystemWindows(android.view.View) -> b
     void <clinit>() -> <clinit>
+com.dodola.rocoofix.RocooFix -> com.dodola.a.a:
+    java.util.Set installedApk -> a
+    boolean IS_VM_CAPABLE -> b
+    void init(android.content.Context) -> a
+    void initPathFromAssets(android.content.Context,java.lang.String) -> a
+    void applyPatch(android.content.Context,java.lang.String) -> b
+    android.content.pm.ApplicationInfo getApplicationInfo(android.content.Context) -> b
+    boolean isARTVMCapable(java.lang.String) -> a
+    void installDexes(java.lang.ClassLoader,java.io.File,java.util.List) -> a
+    java.lang.reflect.Field findField(java.lang.Object,java.lang.String) -> b
+    java.lang.reflect.Method findMethod(java.lang.Object,java.lang.String,java.lang.Class[]) -> b
+    void expandFieldArray(java.lang.Object,java.lang.String,java.lang.Object[]) -> b
+    java.io.File getDexDir(android.content.Context,android.content.pm.ApplicationInfo) -> a
+    void mkdirChecked(java.io.File) -> a
+    java.lang.String copyAsset(android.content.Context,java.lang.String,java.io.File) -> a
+    void copyFile(java.io.InputStream,java.io.OutputStream) -> a
+    java.lang.reflect.Field access$400(java.lang.Object,java.lang.String) -> a
+    java.lang.reflect.Method access$500(java.lang.Object,java.lang.String,java.lang.Class[]) -> a
+    void access$600(java.lang.Object,java.lang.String,java.lang.Object[]) -> a
+    void <clinit>() -> <clinit>
+com.dodola.rocoofix.RocooFix$V14 -> com.dodola.a.b:
+    void install(java.lang.ClassLoader,java.util.List,java.io.File) -> b
+    java.lang.Object[] makeDexElements(java.lang.Object,java.util.ArrayList,java.io.File) -> a
+    void access$200(java.lang.ClassLoader,java.util.List,java.io.File) -> a
+com.dodola.rocoofix.RocooFix$V19 -> com.dodola.a.c:
+    void install(java.lang.ClassLoader,java.util.List,java.io.File) -> b
+    java.lang.Object[] makeDexElements(java.lang.Object,java.util.ArrayList,java.io.File,java.util.ArrayList) -> a
+    void access$100(java.lang.ClassLoader,java.util.List,java.io.File) -> a
+com.dodola.rocoofix.RocooFix$V23 -> com.dodola.a.d:
+    void install(java.lang.ClassLoader,java.util.List,java.io.File) -> b
+    void access$000(java.lang.ClassLoader,java.util.List,java.io.File) -> a
+com.dodola.rocoofix.RocooFix$V4 -> com.dodola.a.e:
+    void install(java.lang.ClassLoader,java.util.List) -> b
+    void access$300(java.lang.ClassLoader,java.util.List) -> a
 com.dodola.rocoosample.HelloHack -> com.dodola.rocoosample.a:
     void <init>() -> <init>
     java.lang.String showHello() -> a

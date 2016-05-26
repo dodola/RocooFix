@@ -24,7 +24,7 @@ android {
 }
 rocoo_fix {
 //    includePackageNames = ['com/dodola/rocoo/HelloHack.class']
-    preVersionPath = '1'
+//    preVersionPath = '1'
     enable = true
 
 }
@@ -32,4 +32,5 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
+    compile project(':rocoo')
 }

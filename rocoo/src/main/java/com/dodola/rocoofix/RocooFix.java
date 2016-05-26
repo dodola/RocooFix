@@ -71,7 +71,7 @@ public final class RocooFix {
             dexPath = copyAsset(context, assetName, dexDir);
         } catch (IOException e) {
         } finally {
-            if (new File(dexPath).exists()) {
+            if (dexPath != null && new File(dexPath).exists()) {
                 applyPatch(context, dexPath);
             }
         }
