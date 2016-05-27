@@ -4,21 +4,20 @@ Another hotfix framework
 
 之前的HotFix项目太过简单，也有很多同学用Nuwa遇到很多问题，作者也不再修复，所以重新构建了一套工具。
 
-大部分功能抄自Nuwa，解决了其一些bug。
-我重新写了一个RocooFix框架，解决了Nuwa因为Gradle Android 1.40 里Transform API无法打包的情况，现在兼容Gradle 1.3-Gradle 2.1.0版本
-
 ![](images/device-2016-05-28-010835.png)
 
 
 ## Features
 * **支持两种模式**：
-1.静态修复某种情况下需要重启应用。
-2.动态修复，无需重启应用即可生效。
+    1. 静态修复某种情况下需要重启应用。
+    2. 动态修复，无需重启应用即可生效。
+* **支持DalvikVM和ART VM**
 * 制作补丁更加方便
 * 支持`com.android.tools.build:gradle:1.3.0`->`com.android.tools.build:gradle:2.1.0` (解决了Nuwa 这个[issue][1])
 * 支持混淆和Mulitdex
 * 无需关注`hash.txt`和`mapping.txt`文件的生成和保存
 
+动态修复使用的是Lody的Legend项目，由于Dalvik的CLASS验证导致这个HOOK框架在Dalvik虚拟机下会崩溃，但是在RocooFix框架里正好可以欺骗这个验证，所以在Dalvik下不会出现原来的崩溃问题。具体情况可以参照[这篇日志](http://dodola.github.io/2016/05/02/legend_crash/)
 ## Use
 
 ```java
@@ -139,6 +138,7 @@ rocoo_fix {
   
 ## 相关项目
 [Legend](https://github.com/asLody/legend)
+
 
   [1]: https://github.com/jasonross/Nuwa/issues/65
   [2]: ./images/1464264036709.jpg "1464264036709.jpg"
