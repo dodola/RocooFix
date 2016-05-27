@@ -36,7 +36,7 @@ public class RocooApplication extends Application {
 
 RocooFix.initPathFromAssets(this, "patch.jar");
 
-//方案2：动态打补丁，立即生效，有性能问题，适用于补丁方法数较少的情况
+//方案2：动态打补丁，立即生效，有性能问题，适用于补丁方法数较少的情况，建议在ART虚拟机里启用该模式
 RocooFix.initPathFromAssetsRuntime(this,"patch.jar");
 
 ```
