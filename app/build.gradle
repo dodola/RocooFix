@@ -23,7 +23,7 @@ android {
     }
 }
 rocoo_fix {
-//    includePackageNames = ['com/dodola/rocoo/HelloHack.class']
+//    includePackageNames = ['com/dodola/rocoo.dex/HelloHack.class']
 //    preVersionPath = '1'
     enable = true
 

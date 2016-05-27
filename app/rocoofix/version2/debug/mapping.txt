@@ -8404,12 +8404,10 @@ android.support.v7.widget.ViewUtils -> android.support.v7.widget.dv:
     void <clinit>() -> <clinit>
 com.dodola.rocoofix.RocooFix -> com.dodola.a.a:
     java.util.Set installedApk -> a
-    boolean IS_VM_CAPABLE -> b
     void init(android.content.Context) -> a
     void initPathFromAssets(android.content.Context,java.lang.String) -> a
     void applyPatch(android.content.Context,java.lang.String) -> b
     android.content.pm.ApplicationInfo getApplicationInfo(android.content.Context) -> b
-    boolean isARTVMCapable(java.lang.String) -> a
     void installDexes(java.lang.ClassLoader,java.io.File,java.util.List) -> a
     java.lang.reflect.Field findField(java.lang.Object,java.lang.String) -> b
     java.lang.reflect.Method findMethod(java.lang.Object,java.lang.String,java.lang.Class[]) -> b

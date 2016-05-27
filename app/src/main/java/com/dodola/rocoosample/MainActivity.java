@@ -8,8 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.dodola.rocoofix.RocooFix;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 HelloHack hack = new HelloHack();
-                Toast.makeText(MainActivity.this, hack.showHello() + " old", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, hack.showHello(), Toast.LENGTH_SHORT).show();
             }
         });
     }

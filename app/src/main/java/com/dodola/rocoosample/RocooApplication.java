@@ -17,6 +17,6 @@ public class RocooApplication extends Application {
         super.attachBaseContext(base);
         //打补丁
         RocooFix.init(this);
-        RocooFix.initPathFromAssets(this,"patch.jar");
+        RocooFix.initPathFromAssets(this, "patch.jar");
     }
 }

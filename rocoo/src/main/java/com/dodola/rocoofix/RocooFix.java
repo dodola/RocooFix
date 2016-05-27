@@ -28,8 +28,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.zip.ZipFile;
 
 import dalvik.system.DexFile;
@@ -50,10 +48,6 @@ public final class RocooFix {
     private static final int VM_WITH_MULTIDEX_VERSION_MINOR = 1;
 
     private static final Set<String> installedApk = new HashSet<String>();
-
-
-    private static final boolean IS_VM_CAPABLE =
-            isARTVMCapable(System.getProperty("java.vm.version"));//判断是否是dalvik虚拟机
 
     private RocooFix() {
     }
@@ -78,10 +72,10 @@ public final class RocooFix {
     }
 
     public static void applyPatch(Context context, String dexPath) {
-        if (IS_VM_CAPABLE) {
-            //art虚拟机走另外一套fix
-            return;
-        }
+//        if (IS_VM_CAPABLE) {
+//            //art虚拟机走另外一套fix
+//            return;
+//        }
 
         try {
             ApplicationInfo applicationInfo = getApplicationInfo(context);
@@ -127,7 +121,6 @@ public final class RocooFix {
             }
 
         } catch (Exception e) {
-            throw new RuntimeException("Hotfix installation failed (" + e.getMessage() + ").");
         } catch (Throwable e) {
         }
     }
@@ -157,35 +150,6 @@ public final class RocooFix {
         return applicationInfo;
     }
 
-    /**
-     * Identifies if the current VM has a native support for Hotfix, meaning there is no need for
-     * additional installation by this library.
-     *
-     * @return true if the VM handles Hotfix
-     */
-    /* package visible for test */
-    static boolean isARTVMCapable(String versionString) {
-        boolean isHotfixCapable = false;
-        if (versionString != null) {
-            Matcher matcher = Pattern.compile("(\\d+)\\.(\\d+)(\\.\\d+)?").matcher(versionString);
-            if (matcher.matches()) {
-                try {
-                    int major = Integer.parseInt(matcher.group(1));
-                    int minor = Integer.parseInt(matcher.group(2));
-                    isHotfixCapable = (major > VM_WITH_MULTIDEX_VERSION_MAJOR)
-                            || ((major == VM_WITH_MULTIDEX_VERSION_MAJOR)
-                            && (minor >= VM_WITH_MULTIDEX_VERSION_MINOR));
-                } catch (NumberFormatException e) {
-                    // let isHotfixCapable be false
-                }
-            }
-        }
-        Log.i(TAG, "VM with version " + versionString +
-                (isHotfixCapable ?
-                        " has Hotfix support" :
-                        " does not have Hotfix support"));
-        return isHotfixCapable;
-    }
 
     private static void installDexes(ClassLoader loader, File dexDir, List<File> files)
             throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException,
