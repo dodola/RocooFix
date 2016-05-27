@@ -21,12 +21,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 HelloHack hack = new HelloHack();
-                Toast.makeText(MainActivity.this, hack.showHello(), Toast.LENGTH_SHORT).show();
-
-                RocooFix.initPathFromAssets(MainActivity.this, "patch.jar");
-                HelloHack hack2 = new HelloHack();
-                Toast.makeText(MainActivity.this, hack2.showHello(), Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(MainActivity.this, hack.showHello() + " old", Toast.LENGTH_SHORT).show();
             }
         });
     }
