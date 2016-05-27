@@ -8464,6 +8464,10 @@ com.dodola.rocoosample.MainActivity$1 -> com.dodola.rocoosample.b:
     com.dodola.rocoosample.MainActivity this$0 -> a
     void <init>(com.dodola.rocoosample.MainActivity) -> <init>
     void onClick(android.view.View) -> onClick
+com.dodola.rocoosample.MainActivity$2 -> com.dodola.rocoosample.c:
+    com.dodola.rocoosample.MainActivity this$0 -> a
+    void <init>(com.dodola.rocoosample.MainActivity) -> <init>
+    void onClick(android.view.View) -> onClick
 com.dodola.rocoosample.RocooApplication -> com.dodola.rocoosample.RocooApplication:
     void <init>() -> <init>
     void attachBaseContext(android.content.Context) -> attachBaseContext

@@ -7,11 +7,13 @@ Another hotfix framework
 大部分功能抄自Nuwa，解决了其一些bug。
 我重新写了一个RocooFix框架，解决了Nuwa因为Gradle Android 1.40 里Transform API无法打包的情况，现在兼容Gradle 1.3-Gradle 2.1.0版本
 
-
+![](images/device-2016-05-28-010835.png)
 
 
 ## Features
-
+* **支持两种模式**：
+1.静态修复某种情况下需要重启应用。
+2.动态修复，无需重启应用即可生效。
 * 制作补丁更加方便
 * 支持`com.android.tools.build:gradle:1.3.0`->`com.android.tools.build:gradle:2.1.0` (解决了Nuwa 这个[issue][1])
 * 支持混淆和Mulitdex
@@ -28,6 +30,14 @@ public class RocooApplication extends Application {
         RocooFix.init(this);
     }
 }
+
+
+//方案1：静态启用，一般在Application里加载补丁
+
+RocooFix.initPathFromAssets(this, "patch.jar");
+
+//方案2：动态打补丁，立即生效，有性能问题，适用于补丁方法数较少的情况
+RocooFix.initPathFromAssetsRuntime(this,"patch.jar");
 
 ```
 
@@ -127,7 +137,8 @@ rocoo_fix {
 ![enter description here][6]
 
   
-
+## 相关项目
+[Legend](https://github.com/asLody/legend)
 
   [1]: https://github.com/jasonross/Nuwa/issues/65
   [2]: ./images/1464264036709.jpg "1464264036709.jpg"
