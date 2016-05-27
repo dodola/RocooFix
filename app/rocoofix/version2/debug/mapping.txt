@@ -8402,38 +8402,58 @@ android.support.v7.widget.ViewUtils -> android.support.v7.widget.dv:
     void computeFitSystemWindows(android.view.View,android.graphics.Rect,android.graphics.Rect) -> a
     void makeOptionalFitsSystemWindows(android.view.View) -> b
     void <clinit>() -> <clinit>
-com.dodola.rocoofix.RocooFix -> com.dodola.a.a:
-    java.util.Set installedApk -> a
-    void init(android.content.Context) -> a
-    void initPathFromAssets(android.content.Context,java.lang.String) -> a
-    void applyPatch(android.content.Context,java.lang.String) -> b
-    android.content.pm.ApplicationInfo getApplicationInfo(android.content.Context) -> b
-    void installDexes(java.lang.ClassLoader,java.io.File,java.util.List) -> a
-    java.lang.reflect.Field findField(java.lang.Object,java.lang.String) -> b
-    java.lang.reflect.Method findMethod(java.lang.Object,java.lang.String,java.lang.Class[]) -> b
-    void expandFieldArray(java.lang.Object,java.lang.String,java.lang.Object[]) -> b
-    java.io.File getDexDir(android.content.Context,android.content.pm.ApplicationInfo) -> a
-    void mkdirChecked(java.io.File) -> a
-    java.lang.String copyAsset(android.content.Context,java.lang.String,java.io.File) -> a
-    void copyFile(java.io.InputStream,java.io.OutputStream) -> a
-    java.lang.reflect.Field access$400(java.lang.Object,java.lang.String) -> a
-    java.lang.reflect.Method access$500(java.lang.Object,java.lang.String,java.lang.Class[]) -> a
-    void access$600(java.lang.Object,java.lang.String,java.lang.Object[]) -> a
+com.dodola.rocoofix.RocooFix -> com.dodola.rocoofix.RocooFix:
+    java.lang.String TAG -> TAG
+    java.lang.String CODE_CACHE_NAME -> CODE_CACHE_NAME
+    java.lang.String CODE_CACHE_SECONDARY_FOLDER_NAME -> CODE_CACHE_SECONDARY_FOLDER_NAME
+    int VM_WITH_MULTIDEX_VERSION_MAJOR -> VM_WITH_MULTIDEX_VERSION_MAJOR
+    int VM_WITH_MULTIDEX_VERSION_MINOR -> VM_WITH_MULTIDEX_VERSION_MINOR
+    java.util.Set installedApk -> installedApk
+    java.lang.String DIR -> DIR
+    java.io.File mOptDir -> mOptDir
+    java.util.HashSet fixedClass -> fixedClass
+    void <init>() -> <init>
+    void init(android.content.Context) -> init
+    void initPathFromAssets(android.content.Context,java.lang.String) -> initPathFromAssets
+    void applyPatch(android.content.Context,java.lang.String) -> applyPatch
+    android.content.pm.ApplicationInfo getApplicationInfo(android.content.Context) -> getApplicationInfo
+    void installDexes(java.lang.ClassLoader,java.io.File,java.util.List) -> installDexes
+    java.lang.reflect.Field findField(java.lang.Object,java.lang.String) -> findField
+    java.lang.reflect.Method findMethod(java.lang.Object,java.lang.String,java.lang.Class[]) -> findMethod
+    void expandFieldArray(java.lang.Object,java.lang.String,java.lang.Object[]) -> expandFieldArray
+    java.io.File getDexDir(android.content.Context,android.content.pm.ApplicationInfo) -> getDexDir
+    void mkdirChecked(java.io.File) -> mkdirChecked
+    java.lang.String copyAsset(android.content.Context,java.lang.String,java.io.File) -> copyAsset
+    void copyFile(java.io.InputStream,java.io.OutputStream) -> copyFile
+    void initPathFromAssetsRuntime(android.content.Context,java.lang.String) -> initPathFromAssetsRuntime
+    void applyPatchRuntime(android.content.Context,java.lang.String) -> applyPatchRuntime
+    void fixClass(java.lang.Class,java.lang.ClassLoader) -> fixClass
+    java.lang.reflect.Field access$400(java.lang.Object,java.lang.String) -> access$400
+    java.lang.reflect.Method access$500(java.lang.Object,java.lang.String,java.lang.Class[]) -> access$500
+    void access$600(java.lang.Object,java.lang.String,java.lang.Object[]) -> access$600
     void <clinit>() -> <clinit>
-com.dodola.rocoofix.RocooFix$V14 -> com.dodola.a.b:
-    void install(java.lang.ClassLoader,java.util.List,java.io.File) -> b
-    java.lang.Object[] makeDexElements(java.lang.Object,java.util.ArrayList,java.io.File) -> a
-    void access$200(java.lang.ClassLoader,java.util.List,java.io.File) -> a
-com.dodola.rocoofix.RocooFix$V19 -> com.dodola.a.c:
-    void install(java.lang.ClassLoader,java.util.List,java.io.File) -> b
-    java.lang.Object[] makeDexElements(java.lang.Object,java.util.ArrayList,java.io.File,java.util.ArrayList) -> a
-    void access$100(java.lang.ClassLoader,java.util.List,java.io.File) -> a
-com.dodola.rocoofix.RocooFix$V23 -> com.dodola.a.d:
-    void install(java.lang.ClassLoader,java.util.List,java.io.File) -> b
-    void access$000(java.lang.ClassLoader,java.util.List,java.io.File) -> a
-com.dodola.rocoofix.RocooFix$V4 -> com.dodola.a.e:
-    void install(java.lang.ClassLoader,java.util.List) -> b
-    void access$300(java.lang.ClassLoader,java.util.List) -> a
+com.dodola.rocoofix.RocooFix$1 -> com.dodola.rocoofix.RocooFix$1:
+    dalvik.system.DexFile val$dexFile -> val$dexFile
+    void <init>(java.lang.ClassLoader,dalvik.system.DexFile) -> <init>
+    java.lang.Class findClass(java.lang.String) -> findClass
+com.dodola.rocoofix.RocooFix$V14 -> com.dodola.rocoofix.RocooFix$V14:
+    void <init>() -> <init>
+    void install(java.lang.ClassLoader,java.util.List,java.io.File) -> install
+    java.lang.Object[] makeDexElements(java.lang.Object,java.util.ArrayList,java.io.File) -> makeDexElements
+    void access$200(java.lang.ClassLoader,java.util.List,java.io.File) -> access$200
+com.dodola.rocoofix.RocooFix$V19 -> com.dodola.rocoofix.RocooFix$V19:
+    void <init>() -> <init>
+    void install(java.lang.ClassLoader,java.util.List,java.io.File) -> install
+    java.lang.Object[] makeDexElements(java.lang.Object,java.util.ArrayList,java.io.File,java.util.ArrayList) -> makeDexElements
+    void access$100(java.lang.ClassLoader,java.util.List,java.io.File) -> access$100
+com.dodola.rocoofix.RocooFix$V23 -> com.dodola.rocoofix.RocooFix$V23:
+    void <init>() -> <init>
+    void install(java.lang.ClassLoader,java.util.List,java.io.File) -> install
+    void access$000(java.lang.ClassLoader,java.util.List,java.io.File) -> access$000
+com.dodola.rocoofix.RocooFix$V4 -> com.dodola.rocoofix.RocooFix$V4:
+    void <init>() -> <init>
+    void install(java.lang.ClassLoader,java.util.List) -> install
+    void access$300(java.lang.ClassLoader,java.util.List) -> access$300
 com.dodola.rocoosample.HelloHack -> com.dodola.rocoosample.a:
     void <init>() -> <init>
     java.lang.String showHello() -> a
@@ -8447,3 +8467,375 @@ com.dodola.rocoosample.MainActivity$1 -> com.dodola.rocoosample.b:
 com.dodola.rocoosample.RocooApplication -> com.dodola.rocoosample.RocooApplication:
     void <init>() -> <init>
     void attachBaseContext(android.content.Context) -> attachBaseContext
+com.lody.legend.Hook -> com.lody.legend.Hook:
+    java.lang.String value() -> value
+com.lody.legend.HookManager -> com.lody.legend.HookManager:
+    int DVM_HOOK_INFO_SIZE -> DVM_HOOK_INFO_SIZE
+    int ART_HOOK_INFO_SIZE -> ART_HOOK_INFO_SIZE
+    com.lody.legend.HookManager sDefault -> sDefault
+    java.util.Map classToBackupMethodsMapping -> classToBackupMethodsMapping
+    void <init>() -> <init>
+    com.lody.legend.HookManager getDefault() -> getDefault
+    void applyHooks(java.lang.Class) -> applyHooks
+    void hookMethod(java.lang.reflect.Method,java.lang.reflect.Method) -> hookMethod
+    java.lang.reflect.Method hookMethodDalvik(java.lang.reflect.Method,java.lang.reflect.Method) -> hookMethodDalvik
+    java.lang.reflect.Method hookMethodArt(java.lang.reflect.Method,java.lang.reflect.Method) -> hookMethodArt
+    java.lang.Object callSuper(java.lang.Object,java.lang.Object[]) -> callSuper
+    java.lang.Object callSuperArt(java.lang.reflect.Method,java.lang.Object,java.lang.Object[]) -> callSuperArt
+    java.lang.Object callSuperDalvik(java.lang.reflect.Method,java.lang.Object,java.lang.Object[]) -> callSuperDalvik
+    java.lang.reflect.Method matchSimilarMethod(java.util.List,java.lang.Object[]) -> matchSimilarMethod
+    boolean isSimilarSignature(java.lang.Class[],java.lang.Class[]) -> isSimilarSignature
+    java.lang.Class wrap(java.lang.Class) -> wrap
+    java.lang.Class[] types(java.lang.Object[]) -> types
+    void <clinit>() -> <clinit>
+com.lody.legend.HookManager$NULL -> com.lody.legend.HookManager$NULL:
+    void <init>() -> <init>
+com.lody.legend.Platform -> com.lody.legend.Platform:
+    java.nio.ByteOrder PLATFORM_BYTE_ORDER -> PLATFORM_BYTE_ORDER
+    com.lody.legend.Platform PLATFORM_INTERNAL -> PLATFORM_INTERNAL
+    void <init>() -> <init>
+    com.lody.legend.Platform getPlatform() -> getPlatform
+    int orderByteToInt(byte[]) -> orderByteToInt
+    long orderByteToLong(byte[]) -> orderByteToLong
+    byte[] orderLongToByte(long,int) -> orderLongToByte
+    byte[] orderIntToByte(int) -> orderIntToByte
+    int getIntSize() -> getIntSize
+    void <clinit>() -> <clinit>
+com.lody.legend.Platform$Platform32Bit -> com.lody.legend.Platform$Platform32Bit:
+    void <init>() -> <init>
+    int orderByteToInt(byte[]) -> orderByteToInt
+    long orderByteToLong(byte[]) -> orderByteToLong
+    byte[] orderLongToByte(long,int) -> orderLongToByte
+    byte[] orderIntToByte(int) -> orderIntToByte
+    int getIntSize() -> getIntSize
+com.lody.legend.Platform$Platform64Bit -> com.lody.legend.Platform$Platform64Bit:
+    void <init>() -> <init>
+    int orderByteToInt(byte[]) -> orderByteToInt
+    long orderByteToLong(byte[]) -> orderByteToLong
+    byte[] orderLongToByte(long,int) -> orderLongToByte
+    byte[] orderIntToByte(int) -> orderIntToByte
+    int getIntSize() -> getIntSize
+com.lody.legend.art.ArtMethod -> com.lody.legend.art.ArtMethod:
+    java.lang.reflect.Method method -> method
+    int M_OBJECT_SIZE -> M_OBJECT_SIZE
+    void <init>(java.lang.reflect.Method) -> <init>
+    com.lody.legend.art.ArtMethod of(java.lang.reflect.Method) -> of
+    com.lody.legend.art.ArtMethod backup() -> backup
+    java.lang.reflect.Method getMethod() -> getMethod
+    long getEntryPointFromInterpreter() -> getEntryPointFromInterpreter
+    void setEntryPointFromInterpreter(long) -> setEntryPointFromInterpreter
+    long getEntryPointFromJni() -> getEntryPointFromJni
+    void setEntryPointFromJni(long) -> setEntryPointFromJni
+    long getEntryPointFromQuickCompiledCode() -> getEntryPointFromQuickCompiledCode
+    void setEntryPointFromQuickCompiledCode(long) -> setEntryPointFromQuickCompiledCode
+    int getAccessFlags() -> getAccessFlags
+    void setAccessFlags(int) -> setAccessFlags
+    long getDeclaringClass() -> getDeclaringClass
+    void setDeclaringClass(long) -> setDeclaringClass
+    long getDexCacheResolvedMethods() -> getDexCacheResolvedMethods
+    void setDexCacheResolvedMethods(long) -> setDexCacheResolvedMethods
+    long getDexCacheResolvedTypes() -> getDexCacheResolvedTypes
+    void setDexCacheResolvedTypes(long) -> setDexCacheResolvedTypes
+    int getDexCodeItemOffset() -> getDexCodeItemOffset
+    void setDexCodeItemOffset(int) -> setDexCodeItemOffset
+    int getDexMethodIndex() -> getDexMethodIndex
+    void setDexMethodIndex(int) -> setDexMethodIndex
+    int getMethodIndex() -> getMethodIndex
+    void setMethodIndex(int) -> setMethodIndex
+    void <clinit>() -> <clinit>
+com.lody.legend.art.ArtMethodStructV19 -> com.lody.legend.art.ArtMethodStructV19:
+    com.lody.legend.utility.StructMember klass_ -> klass_
+    com.lody.legend.utility.StructMember monitor_ -> monitor_
+    com.lody.legend.utility.StructMember declaring_class_ -> declaring_class_
+    com.lody.legend.utility.StructMember dex_cache_initialized_static_storage_ -> dex_cache_initialized_static_storage_
+    com.lody.legend.utility.StructMember dex_cache_resolved_methods_ -> dex_cache_resolved_methods_
+    com.lody.legend.utility.StructMember dex_cache_resolved_types_ -> dex_cache_resolved_types_
+    com.lody.legend.utility.StructMember dex_cache_strings_ -> dex_cache_strings_
+    com.lody.legend.utility.StructMember access_flags_ -> access_flags_
+    com.lody.legend.utility.StructMember code_item_offset_ -> code_item_offset_
+    com.lody.legend.utility.StructMember core_spill_mask_ -> core_spill_mask_
+    com.lody.legend.utility.StructMember entry_point_from_compiled_code_ -> entry_point_from_compiled_code_
+    com.lody.legend.utility.StructMember entry_point_from_interpreter_ -> entry_point_from_interpreter_
+    com.lody.legend.utility.StructMember fp_spill_mask_ -> fp_spill_mask_
+    com.lody.legend.utility.StructMember frame_size_in_bytes_ -> frame_size_in_bytes_
+    com.lody.legend.utility.StructMember gc_map_ -> gc_map_
+    com.lody.legend.utility.StructMember mapping_table_ -> mapping_table_
+    com.lody.legend.utility.StructMember method_dex_index_ -> method_dex_index_
+    com.lody.legend.utility.StructMember method_index_ -> method_index_
+    com.lody.legend.utility.StructMember native_method_ -> native_method_
+    com.lody.legend.utility.StructMember vmap_table_ -> vmap_table_
+    void <init>(java.lang.reflect.Method) -> <init>
+    long getEntryPointFromInterpreter() -> getEntryPointFromInterpreter
+    void setEntryPointFromInterpreter(long) -> setEntryPointFromInterpreter
+    long getEntryPointFromJni() -> getEntryPointFromJni
+    void setEntryPointFromJni(long) -> setEntryPointFromJni
+    long getEntryPointFromQuickCompiledCode() -> getEntryPointFromQuickCompiledCode
+    void setEntryPointFromQuickCompiledCode(long) -> setEntryPointFromQuickCompiledCode
+    int getAccessFlags() -> getAccessFlags
+    void setAccessFlags(int) -> setAccessFlags
+    long getDeclaringClass() -> getDeclaringClass
+    void setDeclaringClass(long) -> setDeclaringClass
+    long getDexCacheResolvedMethods() -> getDexCacheResolvedMethods
+    void setDexCacheResolvedMethods(long) -> setDexCacheResolvedMethods
+    long getDexCacheResolvedTypes() -> getDexCacheResolvedTypes
+    void setDexCacheResolvedTypes(long) -> setDexCacheResolvedTypes
+    int getDexCodeItemOffset() -> getDexCodeItemOffset
+    void setDexCodeItemOffset(int) -> setDexCodeItemOffset
+    int getDexMethodIndex() -> getDexMethodIndex
+    void setDexMethodIndex(int) -> setDexMethodIndex
+    int getMethodIndex() -> getMethodIndex
+    void setMethodIndex(int) -> setMethodIndex
+com.lody.legend.art.ArtMethodStructV22 -> com.lody.legend.art.ArtMethodStructV22:
+    com.lody.legend.utility.StructMember klass_ -> klass_
+    com.lody.legend.utility.StructMember monitor_ -> monitor_
+    com.lody.legend.utility.StructMember declaring_class_ -> declaring_class_
+    com.lody.legend.utility.StructMember dex_cache_resolved_methods_ -> dex_cache_resolved_methods_
+    com.lody.legend.utility.StructMember dex_cache_resolved_types_ -> dex_cache_resolved_types_
+    com.lody.legend.utility.StructMember access_flags_ -> access_flags_
+    com.lody.legend.utility.StructMember dex_code_item_offset_ -> dex_code_item_offset_
+    com.lody.legend.utility.StructMember dex_method_index_ -> dex_method_index_
+    com.lody.legend.utility.StructMember method_index_ -> method_index_
+    com.lody.legend.utility.StructMember entry_point_from_interpreter_ -> entry_point_from_interpreter_
+    com.lody.legend.utility.StructMember entry_point_from_jni_ -> entry_point_from_jni_
+    com.lody.legend.utility.StructMember entry_point_from_quick_compiled_code_ -> entry_point_from_quick_compiled_code_
+    void <init>(java.lang.reflect.Method) -> <init>
+    long getEntryPointFromInterpreter() -> getEntryPointFromInterpreter
+    void setEntryPointFromInterpreter(long) -> setEntryPointFromInterpreter
+    long getEntryPointFromJni() -> getEntryPointFromJni
+    void setEntryPointFromJni(long) -> setEntryPointFromJni
+    long getEntryPointFromQuickCompiledCode() -> getEntryPointFromQuickCompiledCode
+    void setEntryPointFromQuickCompiledCode(long) -> setEntryPointFromQuickCompiledCode
+    int getAccessFlags() -> getAccessFlags
+    void setAccessFlags(int) -> setAccessFlags
+    long getDeclaringClass() -> getDeclaringClass
+    void setDeclaringClass(long) -> setDeclaringClass
+    long getDexCacheResolvedMethods() -> getDexCacheResolvedMethods
+    void setDexCacheResolvedMethods(long) -> setDexCacheResolvedMethods
+    long getDexCacheResolvedTypes() -> getDexCacheResolvedTypes
+    void setDexCacheResolvedTypes(long) -> setDexCacheResolvedTypes
+    int getDexCodeItemOffset() -> getDexCodeItemOffset
+    void setDexCodeItemOffset(int) -> setDexCodeItemOffset
+    int getDexMethodIndex() -> getDexMethodIndex
+    void setDexMethodIndex(int) -> setDexMethodIndex
+    int getMethodIndex() -> getMethodIndex
+    void setMethodIndex(int) -> setMethodIndex
+com.lody.legend.art.ArtMethodStructV22_64Bit -> com.lody.legend.art.ArtMethodStructV22_64Bit:
+    com.lody.legend.utility.StructMember klass_ -> klass_
+    com.lody.legend.utility.StructMember monitor_ -> monitor_
+    com.lody.legend.utility.StructMember declaring_class_ -> declaring_class_
+    com.lody.legend.utility.StructMember dex_cache_resolved_methods_ -> dex_cache_resolved_methods_
+    com.lody.legend.utility.StructMember dex_cache_resolved_types_ -> dex_cache_resolved_types_
+    com.lody.legend.utility.StructMember access_flags_ -> access_flags_
+    com.lody.legend.utility.StructMember dex_code_item_offset_ -> dex_code_item_offset_
+    com.lody.legend.utility.StructMember dex_method_index_ -> dex_method_index_
+    com.lody.legend.utility.StructMember method_index_ -> method_index_
+    com.lody.legend.utility.StructMember entry_point_from_interpreter_ -> entry_point_from_interpreter_
+    com.lody.legend.utility.StructMember entry_point_from_jni_ -> entry_point_from_jni_
+    com.lody.legend.utility.StructMember entry_point_from_quick_compiled_code_ -> entry_point_from_quick_compiled_code_
+    void <init>(java.lang.reflect.Method) -> <init>
+    long getEntryPointFromInterpreter() -> getEntryPointFromInterpreter
+    void setEntryPointFromInterpreter(long) -> setEntryPointFromInterpreter
+    long getEntryPointFromJni() -> getEntryPointFromJni
+    void setEntryPointFromJni(long) -> setEntryPointFromJni
+    long getEntryPointFromQuickCompiledCode() -> getEntryPointFromQuickCompiledCode
+    void setEntryPointFromQuickCompiledCode(long) -> setEntryPointFromQuickCompiledCode
+    int getAccessFlags() -> getAccessFlags
+    void setAccessFlags(int) -> setAccessFlags
+    long getDeclaringClass() -> getDeclaringClass
+    void setDeclaringClass(long) -> setDeclaringClass
+    long getDexCacheResolvedMethods() -> getDexCacheResolvedMethods
+    void setDexCacheResolvedMethods(long) -> setDexCacheResolvedMethods
+    long getDexCacheResolvedTypes() -> getDexCacheResolvedTypes
+    void setDexCacheResolvedTypes(long) -> setDexCacheResolvedTypes
+    int getDexCodeItemOffset() -> getDexCodeItemOffset
+    void setDexCodeItemOffset(int) -> setDexCodeItemOffset
+    int getDexMethodIndex() -> getDexMethodIndex
+    void setDexMethodIndex(int) -> setDexMethodIndex
+    int getMethodIndex() -> getMethodIndex
+    void setMethodIndex(int) -> setMethodIndex
+com.lody.legend.art.ArtMethodStructV23 -> com.lody.legend.art.ArtMethodStructV23:
+    com.lody.legend.utility.StructMember declaring_class_ -> declaring_class_
+    com.lody.legend.utility.StructMember dex_cache_resolved_methods_ -> dex_cache_resolved_methods_
+    com.lody.legend.utility.StructMember dex_cache_resolved_types_ -> dex_cache_resolved_types_
+    com.lody.legend.utility.StructMember access_flags_ -> access_flags_
+    com.lody.legend.utility.StructMember dex_code_item_offset_ -> dex_code_item_offset_
+    com.lody.legend.utility.StructMember dex_method_index_ -> dex_method_index_
+    com.lody.legend.utility.StructMember method_index_ -> method_index_
+    com.lody.legend.utility.StructMember entry_point_from_interpreter_ -> entry_point_from_interpreter_
+    com.lody.legend.utility.StructMember entry_point_from_jni_ -> entry_point_from_jni_
+    com.lody.legend.utility.StructMember entry_point_from_quick_compiled_code_ -> entry_point_from_quick_compiled_code_
+    void <init>(java.lang.reflect.Method) -> <init>
+    long getEntryPointFromInterpreter() -> getEntryPointFromInterpreter
+    void setEntryPointFromInterpreter(long) -> setEntryPointFromInterpreter
+    long getEntryPointFromJni() -> getEntryPointFromJni
+    void setEntryPointFromJni(long) -> setEntryPointFromJni
+    long getEntryPointFromQuickCompiledCode() -> getEntryPointFromQuickCompiledCode
+    void setEntryPointFromQuickCompiledCode(long) -> setEntryPointFromQuickCompiledCode
+    int getAccessFlags() -> getAccessFlags
+    void setAccessFlags(int) -> setAccessFlags
+    long getDeclaringClass() -> getDeclaringClass
+    void setDeclaringClass(long) -> setDeclaringClass
+    long getDexCacheResolvedMethods() -> getDexCacheResolvedMethods
+    void setDexCacheResolvedMethods(long) -> setDexCacheResolvedMethods
+    long getDexCacheResolvedTypes() -> getDexCacheResolvedTypes
+    void setDexCacheResolvedTypes(long) -> setDexCacheResolvedTypes
+    int getDexCodeItemOffset() -> getDexCodeItemOffset
+    void setDexCodeItemOffset(int) -> setDexCodeItemOffset
+    int getDexMethodIndex() -> getDexMethodIndex
+    void setDexMethodIndex(int) -> setDexMethodIndex
+    int getMethodIndex() -> getMethodIndex
+    void setMethodIndex(int) -> setMethodIndex
+com.lody.legend.art.ArtMethodStructV23_64Bit -> com.lody.legend.art.ArtMethodStructV23_64Bit:
+    com.lody.legend.utility.StructMember declaring_class_ -> declaring_class_
+    com.lody.legend.utility.StructMember dex_cache_resolved_methods_ -> dex_cache_resolved_methods_
+    com.lody.legend.utility.StructMember dex_cache_resolved_types_ -> dex_cache_resolved_types_
+    com.lody.legend.utility.StructMember access_flags_ -> access_flags_
+    com.lody.legend.utility.StructMember dex_code_item_offset_ -> dex_code_item_offset_
+    com.lody.legend.utility.StructMember dex_method_index_ -> dex_method_index_
+    com.lody.legend.utility.StructMember method_index_ -> method_index_
+    com.lody.legend.utility.StructMember entry_point_from_interpreter_ -> entry_point_from_interpreter_
+    com.lody.legend.utility.StructMember entry_point_from_jni_ -> entry_point_from_jni_
+    com.lody.legend.utility.StructMember entry_point_from_quick_compiled_code_ -> entry_point_from_quick_compiled_code_
+    void <init>(java.lang.reflect.Method) -> <init>
+    long getEntryPointFromInterpreter() -> getEntryPointFromInterpreter
+    void setEntryPointFromInterpreter(long) -> setEntryPointFromInterpreter
+    long getEntryPointFromJni() -> getEntryPointFromJni
+    void setEntryPointFromJni(long) -> setEntryPointFromJni
+    long getEntryPointFromQuickCompiledCode() -> getEntryPointFromQuickCompiledCode
+    void setEntryPointFromQuickCompiledCode(long) -> setEntryPointFromQuickCompiledCode
+    int getAccessFlags() -> getAccessFlags
+    void setAccessFlags(int) -> setAccessFlags
+    long getDeclaringClass() -> getDeclaringClass
+    void setDeclaringClass(long) -> setDeclaringClass
+    long getDexCacheResolvedMethods() -> getDexCacheResolvedMethods
+    void setDexCacheResolvedMethods(long) -> setDexCacheResolvedMethods
+    long getDexCacheResolvedTypes() -> getDexCacheResolvedTypes
+    void setDexCacheResolvedTypes(long) -> setDexCacheResolvedTypes
+    int getDexCodeItemOffset() -> getDexCodeItemOffset
+    void setDexCodeItemOffset(int) -> setDexCodeItemOffset
+    int getDexMethodIndex() -> getDexMethodIndex
+    void setDexMethodIndex(int) -> setDexMethodIndex
+    int getMethodIndex() -> getMethodIndex
+    void setMethodIndex(int) -> setMethodIndex
+com.lody.legend.dalvik.DalvikConstants -> com.lody.legend.dalvik.DalvikConstants:
+    int DALVIK_JNI_RETURN_VOID -> DALVIK_JNI_RETURN_VOID
+    int DALVIK_JNI_RETURN_FLOAT -> DALVIK_JNI_RETURN_FLOAT
+    int DALVIK_JNI_RETURN_DOUBLE -> DALVIK_JNI_RETURN_DOUBLE
+    int DALVIK_JNI_RETURN_S8 -> DALVIK_JNI_RETURN_S8
+    int DALVIK_JNI_RETURN_S4 -> DALVIK_JNI_RETURN_S4
+    int DALVIK_JNI_RETURN_S2 -> DALVIK_JNI_RETURN_S2
+    int DALVIK_JNI_RETURN_U2 -> DALVIK_JNI_RETURN_U2
+    int DALVIK_JNI_RETURN_S1 -> DALVIK_JNI_RETURN_S1
+    int DALVIK_JNI_RETURN_SHIFT -> DALVIK_JNI_RETURN_SHIFT
+    int DALVIK_JNI_COUNT_SHIFT -> DALVIK_JNI_COUNT_SHIFT
+    int DALVIK_JNI_RETURN_MASK -> DALVIK_JNI_RETURN_MASK
+    int DALVIK_JNI_NO_ARG_INFO -> DALVIK_JNI_NO_ARG_INFO
+    void <init>() -> <init>
+com.lody.legend.dalvik.DalvikHelper -> com.lody.legend.dalvik.DalvikHelper:
+    void <init>() -> <init>
+    int dvmComputeJniArgInfo(java.lang.String) -> dvmComputeJniArgInfo
+    int dvmPlatformInvokeHints(java.lang.String) -> dvmPlatformInvokeHints
+    int dvmCalcMethodArgsSize(java.lang.String) -> dvmCalcMethodArgsSize
+com.lody.legend.dalvik.DalvikMethodStruct -> com.lody.legend.dalvik.DalvikMethodStruct:
+    com.lody.legend.utility.StructMember clazz -> clazz
+    com.lody.legend.utility.StructMember accessFlags -> accessFlags
+    com.lody.legend.utility.StructMember methodIndex -> methodIndex
+    com.lody.legend.utility.StructMember registersSize -> registersSize
+    com.lody.legend.utility.StructMember outsSize -> outsSize
+    com.lody.legend.utility.StructMember insSize -> insSize
+    com.lody.legend.utility.StructMember name -> name
+    com.lody.legend.utility.StructMember dexFile -> dexFile
+    com.lody.legend.utility.StructMember protoIdx -> protoIdx
+    com.lody.legend.utility.StructMember shorty -> shorty
+    com.lody.legend.utility.StructMember insns -> insns
+    com.lody.legend.utility.StructMember jniArgInfo -> jniArgInfo
+    com.lody.legend.utility.StructMember nativeFunc -> nativeFunc
+    java.lang.reflect.Method method -> method
+    void <init>(java.lang.reflect.Method) -> <init>
+    com.lody.legend.dalvik.DalvikMethodStruct of(java.lang.reflect.Method) -> of
+com.lody.legend.interfaces.Restoreable -> com.lody.legend.interfaces.Restoreable:
+    void restore() -> restore
+com.lody.legend.utility.LegendNative -> com.lody.legend.utility.LegendNative:
+    void <init>() -> <init>
+    void memcpy(long,long,int) -> memcpy
+    void memput(long,byte[]) -> memput
+    byte[] memget(long,int) -> memget
+    void munprotect(long,int) -> munprotect
+    long malloc(int) -> malloc
+    void free(long,int) -> free
+    long getMethodAddress(java.lang.reflect.Method) -> getMethodAddress
+    long getObjectAddress(java.lang.Object) -> getObjectAddress
+    boolean isLittleEndian() -> isLittleEndian
+    long getPointer(long) -> getPointer
+    int getCharArrayLength(long,int) -> getCharArrayLength
+    int getCharArrayLength(long) -> getCharArrayLength
+    void <clinit>() -> <clinit>
+com.lody.legend.utility.Logger -> com.lody.legend.utility.Logger:
+    java.lang.String TAG -> TAG
+    boolean OPEN_LOG -> OPEN_LOG
+    void <init>() -> <init>
+    void i(java.lang.String) -> i
+    void i(java.lang.String,java.lang.Object[]) -> i
+    void d(java.lang.String) -> d
+    void d(java.lang.String,java.lang.Object[]) -> d
+    void w(java.lang.String) -> w
+    void w(java.lang.String,java.lang.Object[]) -> w
+    void e(java.lang.String) -> e
+    void e(java.lang.String,java.lang.Object[]) -> e
+    void <clinit>() -> <clinit>
+com.lody.legend.utility.Memory -> com.lody.legend.utility.Memory:
+    sun.misc.Unsafe THE_ONE -> THE_ONE
+    void <init>() -> <init>
+    void copy(long,long,int) -> copy
+    void write(byte[],long) -> write
+    void write(long,byte[]) -> write
+    byte[] read(long,int) -> read
+    void unlock(long,int) -> unlock
+    long alloc(int) -> alloc
+    void free(long,int) -> free
+    sun.misc.Unsafe getUnsafe() -> getUnsafe
+    void <clinit>() -> <clinit>
+com.lody.legend.utility.Runtime -> com.lody.legend.utility.Runtime:
+    java.lang.Boolean gIS_64_BIT -> gIS_64_BIT
+    java.lang.Boolean gIS_LITTLE_ENDIAN -> gIS_LITTLE_ENDIAN
+    void <init>() -> <init>
+    boolean is64Bit() -> is64Bit
+    boolean isLittleEndian() -> isLittleEndian
+    boolean isArt() -> isArt
+    java.lang.String getVmVersion() -> getVmVersion
+    boolean isThumbMode() -> isThumbMode
+    void internalMethod() -> internalMethod
+    void <clinit>() -> <clinit>
+com.lody.legend.utility.Struct -> com.lody.legend.utility.Struct:
+    int UINT_16 -> UINT_16
+    int UINT_32 -> UINT_32
+    long structAddress -> structAddress
+    void <init>(long) -> <init>
+    void applyElement() -> applyElement
+    long getAddress() -> getAddress
+    void write(byte[]) -> write
+    void write(byte[],int) -> write
+com.lody.legend.utility.StructMapping -> com.lody.legend.utility.StructMapping:
+    int offset() -> offset
+    int length() -> length
+com.lody.legend.utility.StructMember -> com.lody.legend.utility.StructMember:
+    long structAddress -> structAddress
+    long varOffsetAddress -> varOffsetAddress
+    int length -> length
+    void <init>(long,long,int) -> <init>
+    long getStructAddress() -> getStructAddress
+    long getVarAddress() -> getVarAddress
+    long getVarOffsetAddress() -> getVarOffsetAddress
+    long getLength() -> getLength
+    void write(byte[]) -> write
+    void write(long) -> write
+    byte[] read() -> read
+    byte[] readInsideAsPointer(int) -> readInsideAsPointer
+    java.lang.String readString(int) -> readString
+    java.lang.String readString() -> readString
+    int readInt() -> readInt
+    long readLong() -> readLong
+sun.misc.Unsafe -> a.a.a:
+    sun.misc.Unsafe THE_ONE -> a
+    void <init>() -> <init>
+    void <clinit>() -> <clinit>

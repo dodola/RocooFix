@@ -12,6 +12,8 @@ import android.content.res.AssetManager;
 import android.os.Build;
 import android.util.Log;
 
+import com.lody.legend.HookManager;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -24,6 +26,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
@@ -48,6 +51,10 @@ public final class RocooFix {
     private static final int VM_WITH_MULTIDEX_VERSION_MINOR = 1;
 
     private static final Set<String> installedApk = new HashSet<String>();
+    private static final String DIR = "rocoo_opt";
+    private static File mOptDir;
+
+    private static HashSet<String> fixedClass = new HashSet<>();
 
     private RocooFix() {
     }
@@ -59,7 +66,9 @@ public final class RocooFix {
     public static void initPathFromAssets(Context context, String assetName) {
         File dexDir = new File(context.getFilesDir(), "hotfix");
         dexDir.mkdir();
-
+        mOptDir = new File(context.getFilesDir(), DIR);
+        if (!mOptDir.exists() && !mOptDir.mkdirs()) {// make directory fail
+        }
         String dexPath = null;
         try {
             dexPath = copyAsset(context, assetName, dexDir);
@@ -468,5 +477,78 @@ public final class RocooFix {
         while ((read = in.read(buffer)) != -1) {
             out.write(buffer, 0, read);
         }
+    }
+
+
+    public static void initPathFromAssetsRuntime(Context context, String assetName) {
+        File dexDir = new File(context.getFilesDir(), "hotfix");
+        dexDir.mkdir();
+
+        String dexPath = null;
+        try {
+            dexPath = copyAsset(context, assetName, dexDir);
+        } catch (IOException e) {
+        } finally {
+            if (dexPath != null && new File(dexPath).exists()) {
+                applyPatchRuntime(context, dexPath);
+            }
+        }
+    }
+
+    private static void applyPatchRuntime(Context context, String dexPath) {
+        try {
+            File file = new File(dexPath);
+            File optfile = new File(mOptDir, file.getName());
+
+            final DexFile dexFile = DexFile.loadDex(file.getAbsolutePath(),
+                    optfile.getAbsolutePath(), Context.MODE_PRIVATE);
+            ClassLoader classLoader = context.getClassLoader();
+
+            ClassLoader patchClassLoader = new ClassLoader(classLoader) {
+                @Override
+                protected Class<?> findClass(String className)
+                        throws ClassNotFoundException {
+                    Class<?> clazz = dexFile.loadClass(className, this);
+                    if (clazz == null
+                            && className.startsWith("com.alipay.euler.andfix")) {
+                        return Class.forName(className);// annotation’s class
+                        // not found
+                    }
+                    if (clazz == null) {
+                        throw new ClassNotFoundException(className);
+                    }
+                    return clazz;
+                }
+            };
+            Enumeration<String> entrys = dexFile.entries();
+            Class<?> clazz = null;
+            while (entrys.hasMoreElements()) {
+                String entry = entrys.nextElement();
+                if (fixedClass.contains(entry)) {
+                    continue;
+                }
+                fixedClass.add(entry);
+                clazz = dexFile.loadClass(entry, patchClassLoader);
+                if (clazz != null) {
+                    fixClass(clazz, classLoader);
+                }
+            }
+        } catch (IOException e) {
+        }
+    }
+
+    private static void fixClass(Class<?> clazz, ClassLoader classLoader) {
+        Method[] methods = clazz.getDeclaredMethods();
+        try {
+            Class<?> aClass = classLoader.loadClass(clazz.getName());
+            for (Method fixMethod : methods) {
+                Method originMethod = aClass.getMethod(fixMethod.getName(), fixMethod.getParameterTypes());
+                HookManager.getDefault().hookMethod(originMethod, fixMethod);
+            }
+        } catch (ClassNotFoundException e) {
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+
     }
 }

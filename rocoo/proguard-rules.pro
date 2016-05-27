@@ -16,3 +16,4 @@
 #   public *;
 #}
 -keep class com.dodola.rocoofix.** {*;}
+-keep class com.lody.legend.** {*;}
