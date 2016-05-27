@@ -14,7 +14,20 @@ Another hotfix framework
 * 支持`com.android.tools.build:gradle:1.3.0`->`com.android.tools.build:gradle:2.1.0` (解决了Nuwa 这个[issue][1])
 * 支持混淆和Mulitdex
 * 无需关注`hash.txt`和`mapping.txt`文件的生成和保存
- 
+
+## Use
+
+```java
+public class RocooApplication extends Application {
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        //打补丁
+        RocooFix.init(this);
+    }
+}
+
+```
 
 ## Configuration
 
@@ -105,13 +118,10 @@ rocoo_fix {
 ![enter description here][4]
 
 6. 正常发布应用，此时会在下图所示的路径中生成补丁文件：
-
-
 ![enter description here][5]
 
 
 7. 我们可以反编译一下来确认补丁是否正常
-8. 
 ![enter description here][6]
 
   
