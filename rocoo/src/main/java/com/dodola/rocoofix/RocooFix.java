@@ -510,9 +510,11 @@ public final class RocooFix {
                         throws ClassNotFoundException {
                     Class<?> clazz = dexFile.loadClass(className, this);
                     if (clazz == null
-                            && className.startsWith("com.alipay.euler.andfix")) {
-                        return Class.forName(className);// annotation’s class
-                        // not found
+                            && (className.startsWith("com.dodola.rocoofix") ||
+                            className.startsWith("com.lody.legend") ||
+                            className.startsWith("com.alipay.euler.andfix")
+                    )) {
+                        return Class.forName(className);
                     }
                     if (clazz == null) {
                         throw new ClassNotFoundException(className);
