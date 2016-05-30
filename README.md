@@ -7,6 +7,7 @@ Another hotfix framework
 ![](images/device-2016-05-28-010835.png)
 
 
+
 ## Features
 * **支持两种模式**：
     1. 静态修复某种情况下需要重启应用。
@@ -18,6 +19,13 @@ Another hotfix framework
 * 无需关注`hash.txt`和`mapping.txt`文件的生成和保存
 
 动态修复使用的是Lody的Legend项目，由于Dalvik的CLASS验证导致这个HOOK框架在Dalvik虚拟机下会崩溃，但是在RocooFix框架里正好可以欺骗这个验证，所以在Dalvik下不会出现原来的崩溃问题。具体情况可以参照[这篇日志](http://dodola.github.io/2016/05/02/legend_crash/)
+
+## TODO
+* 补充单测
+* 兼容性测试
+* Legend 泄露问题
+* 目录规则调整
+
 ## Use
 
 ```java
