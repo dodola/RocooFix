@@ -162,13 +162,20 @@ public class RocooUtils {
         }
 
         if (isUseTransformAPI(project)) {
+            def extensions = [SdkConstants.EXT_JAR] as String[]
+
             Set<File> files = Sets.newHashSet();
+
             dexTask.inputs.files.files.each {
-                def extensions = [SdkConstants.EXT_JAR] as String[]
                 if (it.exists()) {
+                    println("--------->" + it.absolutePath+","+"intermediates/classes/${variant.name.capitalize()}")
                     if (it.isDirectory()) {
                         Collection<File> jars = FileUtils.listFiles(it, extensions, true);
                         files.addAll(jars)
+
+                        if (it.absolutePath.toLowerCase().endsWith("intermediates/classes/${variant.name.capitalize()}".toLowerCase())) {
+                            files.add(it)
+                        }
                     } else if (it.name.endsWith(SdkConstants.DOT_JAR)) {
                         files.add(it)
                     }

@@ -17,6 +17,33 @@ import java.util.zip.ZipEntry
  * Created by jixin.jia on 15/11/10.
  */
 class NuwaProcessor {
+
+//
+//    public void processClasses(File inputFile,  HashSet<String> includePackage, HashSet<String> excludeClass, String dirName, Map hashMap, File patchDir) {
+//        def path = inputFile.absolutePath
+//        println("====inputFile-------->" + path)
+//        if (path.endsWith(".class") && !path.contains("/R\$") && !path.endsWith("/R.class") && !path.endsWith("/BuildConfig.class")) {
+//            if (NuwaSetUtils.isIncluded(path, includePackage)) {
+//                if (!NuwaSetUtils.isExcluded(path, excludeClass)) {
+//                    def bytes = NuwaProcessor.processClass(inputFile)
+//                    path = path.split("${dirName}/")[1]
+//                    def hash = DigestUtils.shaHex(bytes)
+//                    hashFile.append(RocooUtils.format(path, hash))
+//
+//                    if (RocooUtils.notSame(hashMap, path, hash)) {
+//                        def file = new File("${patchDir}/${path}")
+//                        file.getParentFile().mkdirs()
+//                        if (!file.exists()) {
+//                            file.createNewFile()
+//                        }
+//                        FileUtils.writeByteArrayToFile(file, bytes)
+//                    }
+//                }
+//            }
+//        }
+//    }
+
+
     public
     static processJar(File hashFile, File jarFile, File patchDir, Map map, HashSet<String> includePackage, HashSet<String> excludeClass) {
         if (jarFile) {
@@ -96,12 +123,19 @@ class NuwaProcessor {
     }
 
     public static boolean shouldProcessPreDexJar(String path) {
-        return path.endsWith("classes.jar") && !path.contains("com.android.support") && !path.contains("/android/m2repository");
+        return path.endsWith("classes.jar") &&
+                !path.contains("com.android.support") &&
+                !path.contains("/android/m2repository");
     }
 
     private
     static boolean shouldProcessClassInJar(String entryName, HashSet<String> includePackage, HashSet<String> excludeClass) {
-        return entryName.endsWith(".class") && !entryName.startsWith("com/dodola/rocoofix/") && NuwaSetUtils.isIncluded(entryName, includePackage) && !NuwaSetUtils.isExcluded(entryName, excludeClass) && !entryName.contains("android/support/")
+        return entryName.endsWith(".class") &&
+                !entryName.startsWith("com/dodola/rocoofix/") &&
+                !entryName.startsWith("com/lody/legend/") &&
+                NuwaSetUtils.isIncluded(entryName, includePackage) &&
+                !NuwaSetUtils.isExcluded(entryName, excludeClass) &&
+                !entryName.contains("android/support/")
     }
 
     public static byte[] processClass(File file) {

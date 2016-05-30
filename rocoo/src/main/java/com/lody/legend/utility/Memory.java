@@ -2,9 +2,7 @@ package com.lody.legend.utility;
 
 import android.util.Log;
 
-import java.lang.reflect.Field;
 
-import sun.misc.Unsafe;
 
 /**
  * @author Lody
@@ -12,17 +10,17 @@ import sun.misc.Unsafe;
  */
 public class Memory {
 
-    private static Unsafe THE_ONE = null;
-
-    static {
-        try {
-            Field f_the_one = Unsafe.class.getDeclaredField("THE_ONE");
-            f_the_one.setAccessible(true);
-            THE_ONE = (Unsafe) f_the_one.get(null);
-        } catch (Throwable e) {
-            //Ignore
-        }
-    }
+//    private static Unsafe THE_ONE = null;
+//
+//    static {
+//        try {
+//            Field f_the_one = Unsafe.class.getDeclaredField("THE_ONE");
+//            f_the_one.setAccessible(true);
+//            THE_ONE = (Unsafe) f_the_one.get(null);
+//        } catch (Throwable e) {
+//            //Ignore
+//        }
+//    }
 
     public static void copy(long dest, long src, int size) {
         LegendNative.memcpy(dest,src,size);
@@ -57,7 +55,7 @@ public class Memory {
         LegendNative.free(pointer, length);
     }
 
-    public static Unsafe getUnsafe() {
-        return THE_ONE;
-    }
+//    public static Unsafe getUnsafe() {
+//        return THE_ONE;
+//    }
 }

@@ -2,7 +2,7 @@ package com.lody.legend.utility;
 
 import java.lang.reflect.Field;
 
-import libcore.io.SizeOf;
+import com.lody.legend.io.SizeOf;
 
 /**
  *

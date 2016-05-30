@@ -1,4 +1,7 @@
-package libcore.io;
+/*
+ * Copyright (C) 2016 Baidu, Inc. All Rights Reserved.
+ */
+package com.lody.legend.io;
 
 
 /**

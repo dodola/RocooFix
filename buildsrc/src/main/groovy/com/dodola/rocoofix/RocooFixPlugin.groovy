@@ -127,12 +127,13 @@ class RocooFixPlugin implements Plugin<Project> {
                         }
                     }
 
-                    println("-------------------dexTask:" + dexTask)
+                    println("-------------------preDexTask:" + preDexTask)
 
                     if (preDexTask) {
                         def rocooJarBeforePreDex = "rocooJarBeforePreDex${variant.name.capitalize()}"
                         project.task(rocooJarBeforePreDex) << {
                             Set<File> inputFiles = preDexTask.inputs.files.files
+
                             inputFiles.each { inputFile ->
                                 def path = inputFile.absolutePath
                                 if (NuwaProcessor.shouldProcessPreDexJar(path)) {
@@ -150,6 +151,7 @@ class RocooFixPlugin implements Plugin<Project> {
                         project.task(rocooClassBeforeDex) << {
                             Set<File> inputFiles = dexTask.inputs.files.files
                             inputFiles.each { inputFile ->
+//                                NuwaProcessor.processClasses(inputFile, includePackage, excludeClass, dirName, hashMap, patchDir)
                                 def path = inputFile.absolutePath
                                 if (path.endsWith(".class") && !path.contains("/R\$") && !path.endsWith("/R.class") && !path.endsWith("/BuildConfig.class")) {
                                     if (NuwaSetUtils.isIncluded(path, includePackage)) {
@@ -181,10 +183,43 @@ class RocooFixPlugin implements Plugin<Project> {
                         def rocooJarBeforeDex = "rocooJarBeforeDex${variant.name.capitalize()}"
                         project.task(rocooJarBeforeDex) << {
                             Set<File> inputFiles = RocooUtils.getDexTaskInputFiles(project, variant, dexTask)
+
                             inputFiles.each { inputFile ->
+
                                 def path = inputFile.absolutePath
+                                println("rocoojarBefore----->" + path)
                                 if (path.endsWith(SdkConstants.DOT_JAR)) {
                                     NuwaProcessor.processJar(hashFile, inputFile, patchDir, hashMap, includePackage, excludeClass)
+                                } else if (inputFile.isDirectory()) {
+                                    //intermediates/classes/debug
+                                    def extensions = [SdkConstants.EXT_CLASS] as String[]
+
+                                    def inputClasses = FileUtils.listFiles(inputFile, extensions, true);
+                                    println(inputClasses)
+                                    inputClasses.each {
+                                        inputClassFile ->
+
+                                            def classPath = inputClassFile.absolutePath
+                                            if (classPath.endsWith(".class") && !classPath.contains("/R\$") && !classPath.endsWith("/R.class") && !classPath.endsWith("/BuildConfig.class")) {
+                                                if (NuwaSetUtils.isIncluded(classPath, includePackage)) {
+                                                    if (!NuwaSetUtils.isExcluded(classPath, excludeClass)) {
+                                                        def bytes = NuwaProcessor.processClass(inputClassFile)
+                                                        classPath = classPath.split("${dirName}/")[1]
+                                                        def hash = DigestUtils.shaHex(bytes)
+                                                        hashFile.append(RocooUtils.format(classPath, hash))
+                                                        if (RocooUtils.notSame(hashMap, classPath, hash)) {
+                                                            def file = new File("${patchDir}/${classPath}")
+                                                            file.getParentFile().mkdirs()
+                                                            if (!file.exists()) {
+                                                                file.createNewFile()
+                                                            }
+                                                            FileUtils.writeByteArrayToFile(file, bytes)
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                    }
                                 }
                             }
                         }

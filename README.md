@@ -25,6 +25,7 @@ Another hotfix framework
 * 兼容性测试
 * Legend 泄露问题
 * 目录规则调整
+* 上传lib库到maven
 
 ## Use
 

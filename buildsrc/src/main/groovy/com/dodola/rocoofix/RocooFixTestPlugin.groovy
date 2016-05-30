@@ -15,25 +15,29 @@ class RocooFixTestPlugin implements Plugin<Project> {
 
     @Override
     void apply(Project project) {
-        println("=========================================")
         def variants = project.android.applicationVariants;
         println(ReflectionToStringBuilder.toString(variants, RecursiveToStringStyle.MULTI_LINE_STYLE));
-        println("===================end======================")
-        println(ReflectionToStringBuilder.toString(project.plugins.findPlugin(AppPlugin.class), RecursiveToStringStyle.MULTI_LINE_STYLE));
-        println("====================start2=====================")
+        def plugin = project.plugins.findPlugin(AppPlugin.class);
+        println(ReflectionToStringBuilder.toString(plugin, RecursiveToStringStyle.MULTI_LINE_STYLE));
+        println(ReflectionToStringBuilder.toString(plugin.extension, RecursiveToStringStyle.MULTI_LINE_STYLE))
 
         variants.all { variant ->
+            println("==================variant start====================" + variant)
             def manager = variant.variantData.getScope().transformManager;
+
+            manager.transforms.each {
+                println(ReflectionToStringBuilder.toString(it, RecursiveToStringStyle.MULTI_LINE_STYLE));
+            }
+
             def proguardTransform = manager.transforms.find {
                 it.class.name == ProGuardTransform.class.name
             };
             if (proguardTransform)
                 println(ReflectionToStringBuilder.toString(proguardTransform.configuration, RecursiveToStringStyle.MULTI_LINE_STYLE));
         }
-        println("===================end2======================")
+        println("==================variant end====================")
 
-//        for(){
-//
-//        }
+//        println(ReflectionToStringBuilder.toString(, RecursiveToStringStyle.MULTI_LINE_STYLE));
+
     }
 }

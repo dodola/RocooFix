@@ -17,14 +17,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
 rocoo_fix {
-//    includePackageNames = ['com/dodola/rocoo.dex/HelloHack.class']
-//    preVersionPath = '1'
+    preVersionPath = '1'
     enable = true
 
 }
