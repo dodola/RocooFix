@@ -13,13 +13,13 @@ class RocooFixExtension {
     boolean enable = false
 
     @Input
-    HashSet<String> includePackageNames = [];
+    HashSet<String> includePackage = [];
 
     @Input
-    HashSet<String> excludePackageNames = [];
+    HashSet<String> excludePackage = [];
 
     @Input
-    HashSet<String> excludeClasses = [];
+    HashSet<String> excludeClass = [];
 
     @Input
     String preVersionPath

@@ -43,8 +43,8 @@ class RocooFixPlugin implements Plugin<Project> {
 
         project.afterEvaluate {
             RocooFixExtension rocooConfig = RocooFixExtension.getConfig(project);
-            def includePackage = rocooConfig.includePackageNames
-            def excludeClass = rocooConfig.excludeClasses
+            def includePackage = rocooConfig.includePackage
+            def excludeClass = rocooConfig.excludeClass
             if (rocooConfig.enable) {
 
                 variants.all { variant ->
@@ -89,19 +89,19 @@ class RocooFixPlugin implements Plugin<Project> {
                     def rocooPatchTask = project.tasks[rocooPatchTaskName]
 
                     Closure prepareClosure = {
-                        if (rocooConfig.excludeClasses == null) {
-                            rocooConfig.excludeClasses = Sets.newHashSet();
+                        if (rocooConfig.excludeClass == null) {
+                            rocooConfig.excludeClass = Sets.newHashSet();
                         }
                         def applicationClassName = RocooUtils.getApplication(manifestFile);
                         if (applicationClassName != null) {
                             applicationClassName = applicationClassName.replace(".", "/") + SdkConstants.DOT_CLASS
-                            rocooConfig.excludeClasses.add(applicationClassName)
+                            rocooConfig.excludeClass.add(applicationClassName)
                         }
 
-                        if (rocooConfig.excludePackageNames == null) {
-                            rocooConfig.excludePackageNames = Sets.newHashSet();
+                        if (rocooConfig.excludePackage == null) {
+                            rocooConfig.excludePackage = Sets.newHashSet();
                         }
-                        rocooConfig.excludePackageNames.add("android/support/")
+                        rocooConfig.excludePackage.add("android/support/")
 
                         outputDir.mkdirs()
                         if (!hashFile.exists()) {
