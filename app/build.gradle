@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: com.dodola.rocoofix.RocooFixPlugin
+apply plugin: 'com.dodola.rocoofix'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -8,8 +8,8 @@ android {
         applicationId "com.dodola.rocoosample"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 2
-        versionName "2.0"
+        versionCode 1
+        versionName "1.0"
     }
     buildTypes {
         release {
@@ -23,7 +23,7 @@ android {
     }
 }
 rocoo_fix {
-    preVersionPath = '1'
+//    preVersionPath = '1'
     enable = true
 
 }

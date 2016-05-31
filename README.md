@@ -28,7 +28,6 @@ Another hotfix framework
 * 上传lib库到maven
 
 ## Use
-
 ```java
 public class RocooApplication extends Application {
     @Override
@@ -51,8 +50,26 @@ RocooFix.initPathFromAssetsRuntime(this,"patch.jar");
 
 ## Configuration
 
-在你项目的`build.gradle`文件里添加如下配置
+1. 在root的`build.gradle`增加如下内容：
 ```groovy
+ repositories {
+        jcenter()
+        maven {
+            url "http://dl.bintray.com/dodola/maven"
+        }
+    }
+ dependencies {
+        classpath 'com.dodola:rocoofix:1.0'
+    }
+```
+
+2. 在你项目的`build.gradle`文件里添加如下配置
+
+```groovy
+apply plugin: 'com.dodola.rocoofix'
+
+
+
 rocoo_fix {
     includePackage = ['com/dodola/rocoofix']//限制需要制作补丁的package
     excludeClass = ['BaseApplication.class']//将不需要加到patch里的类写在这里

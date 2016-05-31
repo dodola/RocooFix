@@ -1,10 +1,18 @@
 apply plugin: 'groovy'
 
+archivesBaseName = 'rocoofix'
+version = "1.0"
+group = 'com.dodola'
+
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
 buildscript {
+    dependencies {
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'
+    }
     repositories {
         mavenLocal()
         jcenter()
@@ -40,3 +48,25 @@ dependencies {
     compile 'org.ow2.asm:asm:5.0'
     compile 'org.javassist:javassist:3.18.1-GA'
 }
+
+//apply plugin: 'com.jfrog.bintray'
+//bintray {
+//    user = 'dodola'
+//    key = ''
+//    publish = true
+//    configurations = ['archives']
+//    pkg {
+//        repo = 'maven'
+//        name = 'rocoofix'
+//        desc = 'another hotfix framework'
+//        issueTrackerUrl = ''
+//        vcsUrl = "https://github.com/dodola/RocooFix"
+//        licenses = ['MIT']
+//        publicDownloadNumbers = true
+//        version {
+//            name = '1.0'
+//            vcsTag = '1.0'
+//        }
+//    }
+//}
+
