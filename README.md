@@ -46,13 +46,13 @@ public class RocooApplication extends Application {
   * @param context
   * @param assetName
   */
-RocooFix.initPathFromAssets(this, "patch.jar”);
+RocooFix.initPathFromAssets(Context context, String assetName);
  /**
    * 从指定目录加载补丁
    * @param context
    * @param dexPath
    */
-RocooFix.applyPatch(Context context, String dexPath)
+RocooFix.applyPatch(Context context, String dexPath);
 
 
 //方案2：动态打补丁，立即生效，有性能问题，适用于补丁方法数较少的情况，建议在ART虚拟机里启用该模式
@@ -61,14 +61,14 @@ RocooFix.applyPatch(Context context, String dexPath)
  * @param context
  * @param assetName
  */
-RocooFix.initPathFromAssetsRuntime(Context context, String assetName) 
+RocooFix.initPathFromAssetsRuntime(Context context, String assetName) ;
 
 /**
  * 从指定目录加载补丁
  * @param context
  * @param dexPath
  */ 
-RocooFix.applyPatchRuntime(Context context, String dexPath)  
+RocooFix.applyPatchRuntime(Context context, String dexPath)  ;
 ```
 
 ## Configuration
