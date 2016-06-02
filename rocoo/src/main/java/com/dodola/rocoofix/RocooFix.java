@@ -30,7 +30,9 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.zip.ZipFile;
 
 import dalvik.system.DexFile;
@@ -53,8 +55,8 @@ public final class RocooFix {
     private static final Set<String> installedApk = new HashSet<String>();
     private static final String DIR = "rocoo_opt";
     private static File mOptDir;
+    private static Map<String, Class<?>> mFixedClass = new ConcurrentHashMap<String, Class<?>>();
 
-    private static HashSet<String> fixedClass = new HashSet<>();
 
     private RocooFix() {
     }
@@ -88,6 +90,7 @@ public final class RocooFix {
 
     /**
      * 从指定目录加载补丁
+     *
      * @param context
      * @param dexPath
      */
@@ -493,6 +496,7 @@ public final class RocooFix {
 
     /**
      * 从Asset里加载补丁，一般用于本地测试
+     *
      * @param context
      * @param assetName
      */
@@ -513,10 +517,18 @@ public final class RocooFix {
 
     /**
      * 从指定目录加载补丁
+     *
      * @param context
      * @param dexPath
      */
     public static void applyPatchRuntime(Context context, String dexPath) {
+
+        if (context == null) {
+            return;
+        } else {
+            context = context.getApplicationContext();
+        }
+
         try {
             File file = new File(dexPath);
             File optfile = new File(mOptDir, file.getName());
@@ -547,10 +559,7 @@ public final class RocooFix {
             Class<?> clazz = null;
             while (entrys.hasMoreElements()) {
                 String entry = entrys.nextElement();
-                if (fixedClass.contains(entry)) {
-                    continue;
-                }
-                fixedClass.add(entry);
+
                 clazz = dexFile.loadClass(entry, patchClassLoader);
                 if (clazz != null) {
                     fixClass(clazz, classLoader);
@@ -561,17 +570,64 @@ public final class RocooFix {
     }
 
     private static void fixClass(Class<?> clazz, ClassLoader classLoader) {
+        if (clazz == null) {
+            return;
+        }
         Method[] methods = clazz.getDeclaredMethods();
         try {
             Class<?> aClass = classLoader.loadClass(clazz.getName());
-            for (Method fixMethod : methods) {
-                Method originMethod = aClass.getMethod(fixMethod.getName(), fixMethod.getParameterTypes());
-                HookManager.getDefault().hookMethod(originMethod, fixMethod);
+            String key = aClass.getName() + "@" + classLoader.toString();
+            Class<?> clazzFixed = mFixedClass.get(key);
+            if (clazzFixed == null) {
+                Class<?> clzz = classLoader.loadClass(clazz.getName());
+                // 他喵的我忘了初始化这个类了
+                clazzFixed = initTargetClass(clzz);
             }
+            if (clazzFixed != null) {
+                mFixedClass.put(key, clazzFixed);
+                for (Method fixMethod : methods) {
+                    replaceMethod(aClass, fixMethod, classLoader);
+                }
+            }
+
+
         } catch (ClassNotFoundException e) {
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
+
+    }
+
+
+    public static Class<?> initTargetClass(Class<?> clazz) {
+        try {
+            Class<?> targetClazz = Class.forName(clazz.getName(), true,
+                    clazz.getClassLoader());
+//            initFields(targetClazz);
+            return targetClazz;
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+//    private static void initFields(Class<?> clazz) {
+//        Field[] srcFields = clazz.getDeclaredFields();
+//        for (Field srcField : srcFields) {
+//            setFieldFlag(srcField);
+//        }
+//    }
+
+
+    private static void replaceMethod(Class<?> aClass, Method fixMethod, ClassLoader classLoader) throws NoSuchMethodException {
+
+        try {
+
+            Method originMethod = aClass.getMethod(fixMethod.getName(), fixMethod.getParameterTypes());
+            HookManager.getDefault().hookMethod(originMethod, fixMethod);
+        } catch (Exception e) {
+            Log.e(TAG, "replaceMethod", e);
+        }
+
 
     }
 }
