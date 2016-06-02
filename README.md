@@ -116,6 +116,7 @@ rocoo_fix {
 
 ```
 -keep class com.dodola.rocoofix.** {*;}
+-keep class com.lody.legend.* {*;}
 ```
 
 ## Build Patch
