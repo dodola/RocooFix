@@ -63,6 +63,12 @@ public final class RocooFix {
         initPathFromAssets(context, "rocoo.dex");
     }
 
+    /**
+     * 从Assets里取出补丁，一般用于测试
+     *
+     * @param context
+     * @param assetName
+     */
     public static void initPathFromAssets(Context context, String assetName) {
         File dexDir = new File(context.getFilesDir(), "hotfix");
         dexDir.mkdir();
@@ -80,6 +86,11 @@ public final class RocooFix {
         }
     }
 
+    /**
+     * 从指定目录加载补丁
+     * @param context
+     * @param dexPath
+     */
     public static void applyPatch(Context context, String dexPath) {
 //        if (IS_VM_CAPABLE) {
 //            //art虚拟机走另外一套fix
@@ -480,6 +491,11 @@ public final class RocooFix {
     }
 
 
+    /**
+     * 从Asset里加载补丁，一般用于本地测试
+     * @param context
+     * @param assetName
+     */
     public static void initPathFromAssetsRuntime(Context context, String assetName) {
         File dexDir = new File(context.getFilesDir(), "hotfix");
         dexDir.mkdir();
@@ -495,7 +511,12 @@ public final class RocooFix {
         }
     }
 
-    private static void applyPatchRuntime(Context context, String dexPath) {
+    /**
+     * 从指定目录加载补丁
+     * @param context
+     * @param dexPath
+     */
+    public static void applyPatchRuntime(Context context, String dexPath) {
         try {
             File file = new File(dexPath);
             File optfile = new File(mOptDir, file.getName());

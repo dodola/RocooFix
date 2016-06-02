@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2016 Baidu, Inc. All Rights Reserved.
  */
-package com.dodola.rocoosample;
+package com.dodola.rocoosample.runtimefix;
 
 import android.app.Application;
 import android.content.Context;
@@ -17,6 +17,5 @@ public class RocooApplication extends Application {
         super.attachBaseContext(base);
         //打补丁
         RocooFix.init(this);
-        RocooFix.initPathFromAssets(this, "patch.jar");
     }
 }

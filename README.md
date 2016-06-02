@@ -40,12 +40,35 @@ public class RocooApplication extends Application {
 
 
 //方案1：静态启用，一般在Application里加载补丁
+/**
+  * 从Assets里取出补丁，一般用于测试
+  *
+  * @param context
+  * @param assetName
+  */
+RocooFix.initPathFromAssets(this, "patch.jar”);
+ /**
+   * 从指定目录加载补丁
+   * @param context
+   * @param dexPath
+   */
+RocooFix.applyPatch(Context context, String dexPath)
 
-RocooFix.initPathFromAssets(this, "patch.jar");
 
 //方案2：动态打补丁，立即生效，有性能问题，适用于补丁方法数较少的情况，建议在ART虚拟机里启用该模式
-RocooFix.initPathFromAssetsRuntime(this,"patch.jar");
+/**
+ * 从Asset里加载补丁，一般用于本地测试
+ * @param context
+ * @param assetName
+ */
+RocooFix.initPathFromAssetsRuntime(Context context, String assetName) 
 
+/**
+ * 从指定目录加载补丁
+ * @param context
+ * @param dexPath
+ */ 
+RocooFix.applyPatchRuntime(Context context, String dexPath)  
 ```
 
 ## Configuration

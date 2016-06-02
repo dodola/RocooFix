@@ -24,17 +24,7 @@
         android:layout_height="wrap_content"
         android:text="FixMe" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="方式2：动态修复，无需重启应用立即有效" />
 
-    <Button
-        android:id="@+id/btnFixMeRuntime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FixMeRuntime" />
 
 
 </LinearLayout>
