@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'com.dodola.rocoofix'
-apply plugin: com.dodola.rocoofix.RocooFixPlugin
+apply plugin: 'com.dodola.rocoofix'
+//apply plugin: com.dodola.rocoofix.RocooFixPlugin
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -11,9 +11,6 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-    }
-    productFlavors {
-        baidu {}
     }
 
     buildTypes {
