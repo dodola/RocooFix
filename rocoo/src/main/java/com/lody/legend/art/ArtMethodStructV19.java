@@ -12,7 +12,6 @@ import java.lang.reflect.Method;
 public class ArtMethodStructV19 extends ArtMethod {
 
 
-
     @StructMapping(offset = 0)
     private StructMember klass_;
 
@@ -176,4 +175,62 @@ public class ArtMethodStructV19 extends ArtMethod {
     public void setMethodIndex(int index) {
         method_index_.write(index);
     }
+
+    public void setFrameSizeInBytes(int index) {
+        frame_size_in_bytes_.write(index);
+    }
+
+    public int getFrameSizeInBytes() {
+        return frame_size_in_bytes_.readInt();
+    }
+
+    public void setDexCacheInitializedStaticStorage(int index) {
+        dex_cache_initialized_static_storage_.write(index);
+    }
+
+    public int getDexCacheInitializedStaticStorage() {
+        return dex_cache_initialized_static_storage_.readInt();
+    }
+
+    public void setVmapTable(int index) {
+        vmap_table_.write(index);
+    }
+
+    public int getVmapTable() {
+        return vmap_table_.readInt();
+    }
+
+    public void setCoreSpillMask(int index) {
+        core_spill_mask_.write(index);
+    }
+
+    public int getCoreSpillMask() {
+        return core_spill_mask_.readInt();
+    }
+
+    public void setFpSpillMask(int index) {
+        fp_spill_mask_.write(index);
+    }
+
+    public int getFpSpillMask() {
+        return fp_spill_mask_.readInt();
+    }
+
+    public void setMappingTable(int index) {
+        mapping_table_.write(index);
+    }
+
+    public int getMappingTable() {
+        return mapping_table_.readInt();
+    }
+
+    public void setCodeItemOffset(int index) {
+        code_item_offset_.write(index);
+    }
+
+    public int getCodeItemOffset() {
+        return code_item_offset_.readInt();
+    }
+
+//    public void set
 }

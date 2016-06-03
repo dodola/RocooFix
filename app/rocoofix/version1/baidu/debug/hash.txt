@@ -1,0 +1,1 @@
+com/dodola/rocoo/BuildConfig.class:23118cedffd868c3ae716432e80a71648d8ae616

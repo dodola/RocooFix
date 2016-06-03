@@ -50,7 +50,7 @@ public abstract class ArtMethod extends Struct {
                     ? new ArtMethodStructV23_64Bit(method)
                     : new ArtMethodStructV23(method);
         }
-        else if (Build.VERSION.SDK_INT >= 21) {
+        else if (Build.VERSION.SDK_INT > 21) {
             return Runtime.is64Bit()
                     ? new ArtMethodStructV22_64Bit(method)
                     : new ArtMethodStructV22(method);

@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         this.findViewById(R.id.btnFixMeRuntime).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                HelloHack hacks = new HelloHack();
                 RocooFix.initPathFromAssetsRuntime(MainActivity.this, "patch.jar");
                 HelloHack hack1 = new HelloHack();
                 Toast.makeText(MainActivity.this, hack1.showHello(), Toast.LENGTH_SHORT).show();
