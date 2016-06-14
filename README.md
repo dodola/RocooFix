@@ -91,7 +91,11 @@ RocooFix.applyPatchRuntime(Context context, String dexPath)  ;
 ```groovy
 apply plugin: 'com.dodola.rocoofix'
 
-
+repositories {
+    maven {
+        url  "http://dl.bintray.com/dodola/maven"
+    }
+}
 
 rocoo_fix {
     includePackage = ['com/dodola/rocoofix']//限制需要制作补丁的package
@@ -101,6 +105,12 @@ rocoo_fix {
     
     enable = true//注意：关掉此项会无法生成Hash.txt文件
 }
+
+dependencies {
+
+    compile 'com.dodola:rocoo:1.0'
+}
+
 ```
 
 这里主要介绍一下`preVersionPath`这个属性的作用。

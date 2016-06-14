@@ -1,7 +1,28 @@
 /*
  * Copyright (C) 2016 Baidu, Inc. All Rights Reserved.
  */
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
+
+    }
+}
+plugins {
+    id "com.jfrog.bintray" version "1.4"
+}
+repositories {
+    jcenter()
+}
+group = 'com.dodola'
+version = '1.0'
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
 
 android {
     compileSdkVersion 23
@@ -25,4 +46,65 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.+'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+}
+
+
+
+
+def siteUrl = 'https://github.com/dodola/RocooFix'
+def gitUrl = 'https://github.com/dodola/RocooFix.git'
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'jar'
+                name ''
+                url siteUrl
+                licenses {
+                    license {
+                        name 'The MIT License (MIT)'
+                        url 'https://github.com/dodola/RocooFix/raw/master/LICENSE'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'dodola'
+                        name 'Dodola'
+                        email 'dinophp@gmail.com'
+                    }
+                }
+                scm {
+                    connection 'https://github.com/dodola/RocooFix.git'
+                    developerConnection 'https://github.com/dodola/RocooFix.git'
+                    url siteUrl
+
+                }
+            }
+        }
+    }
+}
+
+
+
+bintray {
+    user = 'dodola'
+    key = ''
+    publish = true
+    configurations = ['archives'] //When uploading configuration files
+    pkg {
+        repo = 'maven'
+        name = "RocooFixLib"
+        desc = 'Hotfix'
+        websiteUrl = siteUrl
+        issueTrackerUrl = 'https://github.com/dodola/RocooFix/issues'
+        vcsUrl = gitUrl
+        licenses = ['MIT']
+        labels = ['jar', 'android', 'hotfix']
+        publicDownloadNumbers = true
+        version {
+            name = '1.0'
+            vcsTag = '1.0'
+        }
+    }
 }
