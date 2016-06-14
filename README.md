@@ -82,7 +82,7 @@ RocooFix.applyPatchRuntime(Context context, String dexPath)  ;
         }
     }
  dependencies {
-        classpath 'com.dodola:rocoofix:1.0'
+        classpath 'com.dodola:rocoofix:1.1’
     }
 ```
 
