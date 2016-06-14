@@ -1,3 +1,4 @@
-com/dodola/rocoosample/a.class:b48f727343fa98edcf6757798e005fd45add94e6
-com/dodola/rocoosample/b.class:76b9650a36c9aaac22679f6da3484cbda2504781
-com/dodola/rocoosample/MainActivity.class:7d8b2aecb7547c0797c0e378a72dc1882ca5bbe7
+com/dodola/rocoosample/HelloHack.class:580450916f68ff855ed1cf9b66c057f7fe4741c7
+com/dodola/rocoosample/MainActivity$1.class:09175e6c954e10d76eaeb17650fafcd0455b049e
+com/dodola/rocoosample/MainActivity.class:827781a9ca4443350c4010402ad0b078d199bb99
+com/dodola/rocoo/BuildConfig.class:23118cedffd868c3ae716432e80a71648d8ae616
