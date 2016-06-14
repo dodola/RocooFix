@@ -129,6 +129,7 @@ class RocooFixPlugin implements Plugin<Project> {
                     }
 
                     println("-------------------preDexTask:" + preDexTask)
+                    println("-------------------dexTask:" + dexTask)
 
                     if (preDexTask) {
                         def rocooJarBeforePreDex = "rocooJarBeforePreDex${variant.name.capitalize()}"
@@ -196,7 +197,6 @@ class RocooFixPlugin implements Plugin<Project> {
                                     def extensions = [SdkConstants.EXT_CLASS] as String[]
 
                                     def inputClasses = FileUtils.listFiles(inputFile, extensions, true);
-                                    println(inputClasses)
                                     inputClasses.each {
                                         inputClassFile ->
 

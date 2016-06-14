@@ -168,12 +168,12 @@ public class RocooUtils {
 
             dexTask.inputs.files.files.each {
                 if (it.exists()) {
-                    println("--------->" + it.absolutePath+","+"intermediates/classes/${variant.name.capitalize()}")
+                    println("--------->" + it.absolutePath+","+"intermediates/classes/${variant.dirName}")
                     if (it.isDirectory()) {
                         Collection<File> jars = FileUtils.listFiles(it, extensions, true);
                         files.addAll(jars)
 
-                        if (it.absolutePath.toLowerCase().endsWith("intermediates/classes/${variant.name.capitalize()}".toLowerCase())) {
+                        if (it.absolutePath.toLowerCase().endsWith("intermediates/classes/${variant.dirName}".toLowerCase())) {
                             files.add(it)
                         }
                     } else if (it.name.endsWith(SdkConstants.DOT_JAR)) {

@@ -49,24 +49,24 @@ dependencies {
     compile 'org.javassist:javassist:3.18.1-GA'
 }
 
-//apply plugin: 'com.jfrog.bintray'
-//bintray {
-//    user = 'dodola'
-//    key = ''
-//    publish = true
-//    configurations = ['archives']
-//    pkg {
-//        repo = 'maven'
-//        name = 'rocoofix'
-//        desc = 'another hotfix framework'
-//        issueTrackerUrl = ''
-//        vcsUrl = "https://github.com/dodola/RocooFix"
-//        licenses = ['MIT']
-//        publicDownloadNumbers = true
-//        version {
-//            name = '1.1'
-//            vcsTag = '1.1'
-//        }
-//    }
-//}
+apply plugin: 'com.jfrog.bintray'
+bintray {
+    user = 'dodola'
+    key = ''
+    publish = true
+    configurations = ['archives']
+    pkg {
+        repo = 'maven'
+        name = 'rocoofix'
+        desc = 'another hotfix framework'
+        issueTrackerUrl = ''
+        vcsUrl = "https://github.com/dodola/RocooFix"
+        licenses = ['MIT']
+        publicDownloadNumbers = true
+        version {
+            name = '1.1'
+            vcsTag = '1.1'
+        }
+    }
+}
 

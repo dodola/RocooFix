@@ -1,4 +1,4 @@
 /*
  * Copyright (C) 2016 Baidu, Inc. All Rights Reserved.
  */
-include ':app', ':rocoo', ':appruntimefix'// , ':buildsrc'
+include ':app', ':rocoo', ':appruntimefix'//, ':buildsrc'

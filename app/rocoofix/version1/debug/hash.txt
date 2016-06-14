@@ -1,4 +1,0 @@
-com/dodola/rocoo/BuildConfig.class:23118cedffd868c3ae716432e80a71648d8ae616
-com/dodola/rocoosample/HelloHack.class:580450916f68ff855ed1cf9b66c057f7fe4741c7
-com/dodola/rocoosample/MainActivity$1.class:09175e6c954e10d76eaeb17650fafcd0455b049e
-com/dodola/rocoosample/MainActivity.class:827781a9ca4443350c4010402ad0b078d199bb99

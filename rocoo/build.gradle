@@ -86,25 +86,25 @@ install {
 }
 
 
-
-bintray {
-    user = 'dodola'
-    key = ''
-    publish = true
-    configurations = ['archives'] //When uploading configuration files
-    pkg {
-        repo = 'maven'
-        name = "RocooFixLib"
-        desc = 'Hotfix'
-        websiteUrl = siteUrl
-        issueTrackerUrl = 'https://github.com/dodola/RocooFix/issues'
-        vcsUrl = gitUrl
-        licenses = ['MIT']
-        labels = ['jar', 'android', 'hotfix']
-        publicDownloadNumbers = true
-        version {
-            name = '1.0'
-            vcsTag = '1.0'
-        }
-    }
-}
+//
+//bintray {
+//    user = 'dodola'
+//    key = ''
+//    publish = true
+//    configurations = ['archives'] //When uploading configuration files
+//    pkg {
+//        repo = 'maven'
+//        name = "RocooFixLib"
+//        desc = 'Hotfix'
+//        websiteUrl = siteUrl
+//        issueTrackerUrl = 'https://github.com/dodola/RocooFix/issues'
+//        vcsUrl = gitUrl
+//        licenses = ['MIT']
+//        labels = ['jar', 'android', 'hotfix']
+//        publicDownloadNumbers = true
+//        version {
+//            name = '1.0'
+//            vcsTag = '1.0'
+//        }
+//    }
+//}
