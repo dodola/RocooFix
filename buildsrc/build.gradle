@@ -1,7 +1,7 @@
 apply plugin: 'groovy'
 
 archivesBaseName = 'rocoofix'
-version = "1.0"
+version = "1.1"
 group = 'com.dodola'
 
 
@@ -64,8 +64,8 @@ dependencies {
 //        licenses = ['MIT']
 //        publicDownloadNumbers = true
 //        version {
-//            name = '1.0'
-//            vcsTag = '1.0'
+//            name = '1.1'
+//            vcsTag = '1.1'
 //        }
 //    }
 //}

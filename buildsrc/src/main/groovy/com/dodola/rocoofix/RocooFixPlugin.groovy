@@ -52,9 +52,10 @@ class RocooFixPlugin implements Plugin<Project> {
                     def preDexTask = project.tasks.findByName(RocooUtils.getPreDexTaskName(project, variant))
                     def dexTask = project.tasks.findByName(RocooUtils.getDexTaskName(project, variant))
                     def proguardTask = project.tasks.findByName(RocooUtils.getProGuardTaskName(project, variant))
-                    def processManifestTask = project.tasks.findByName(RocooUtils.getProcessManifestTaskName(project, variant))
+//                    def processManifestTask = project.tasks.findByName(RocooUtils.getProcessManifestTaskName(project, variant))
 
-                    def manifestFile = processManifestTask.outputs.files.files[0]
+                    println("manifests:"+variant.outputs.processManifest.manifestOutputFile)
+                    def manifestFile = variant.outputs.processManifest.manifestOutputFile[0]
 
                     Map hashMap = applyMapping(project, variant, proguardTask)
 
