@@ -3,6 +3,8 @@
  */
 package com.dodola.rocoofix.utils
 
+import com.dodola.rocoofix.RocooFixPlugin
+import com.dodola.rocoofix.utils.classref.ClassReferenceListBuilder
 import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.IOUtils
@@ -47,9 +49,13 @@ class NuwaProcessor {
     public
     static processJar(File hashFile, File jarFile, File patchDir, Map map, HashSet<String> includePackage, HashSet<String> excludeClass) {
         if (jarFile) {
-            def optJar = new File(jarFile.getParent(), jarFile.name + ".opt")
 
+            def optJar = new File(jarFile.getParent(), jarFile.name + ".opt")
             def file = new JarFile(jarFile);
+
+            ClassReferenceListBuilder referenceListBuilder = new ClassReferenceListBuilder(patchDir.getAbsolutePath());
+            referenceListBuilder.addRoots(jarFile.getAbsolutePath());
+
             Enumeration enumeration = file.entries();
             JarOutputStream jarOutputStream = new JarOutputStream(new FileOutputStream(optJar));
 
@@ -78,6 +84,11 @@ class NuwaProcessor {
                             entryFile.createNewFile()
                         }
                         FileUtils.writeByteArrayToFile(entryFile, bytes)
+
+                        if (RocooFixPlugin.rocooConfig.scanref) {
+                            referenceListBuilder.run(entryName)
+                            referenceListBuilder.clearCache()
+                        }
                     }
                 } else {
                     jarOutputStream.write(IOUtils.toByteArray(inputStream));
@@ -96,7 +107,7 @@ class NuwaProcessor {
     }
 
     //refer hack class when object init
-    private static byte[] referHackWhenInit(InputStream inputStream) {
+    public static byte[] referHackWhenInit(InputStream inputStream) {
         ClassReader cr = new ClassReader(inputStream);
         ClassWriter cw = new ClassWriter(cr, 0);
         ClassVisitor cv = new ClassVisitor(Opcodes.ASM4, cw) {

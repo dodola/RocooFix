@@ -26,6 +26,7 @@ class RocooFixPlugin implements Plugin<Project> {
 
     private static final String MAPPING_TXT = "mapping.txt"
     private static final String HASH_TXT = "hash.txt"
+    public static RocooFixExtension rocooConfig
 
     @Override
     public void apply(Project project) {
@@ -42,7 +43,8 @@ class RocooFixPlugin implements Plugin<Project> {
     private void applyTask(Project project, DomainObjectCollection<BaseVariant> variants) {
 
         project.afterEvaluate {
-            RocooFixExtension rocooConfig = RocooFixExtension.getConfig(project);
+            rocooConfig = RocooFixExtension.getConfig(project);
+
             def includePackage = rocooConfig.includePackage
             def excludeClass = rocooConfig.excludeClass
             if (rocooConfig.enable) {
@@ -54,7 +56,7 @@ class RocooFixPlugin implements Plugin<Project> {
                     def proguardTask = project.tasks.findByName(RocooUtils.getProGuardTaskName(project, variant))
 //                    def processManifestTask = project.tasks.findByName(RocooUtils.getProcessManifestTaskName(project, variant))
 
-                    println("manifests:"+variant.outputs.processManifest.manifestOutputFile)
+                    println("manifests:" + variant.outputs.processManifest.manifestOutputFile)
                     def manifestFile = variant.outputs.processManifest.manifestOutputFile[0]
 
                     Map hashMap = applyMapping(project, variant, proguardTask)
@@ -193,6 +195,7 @@ class RocooFixPlugin implements Plugin<Project> {
                                 if (path.endsWith(SdkConstants.DOT_JAR)) {
                                     NuwaProcessor.processJar(hashFile, inputFile, patchDir, hashMap, includePackage, excludeClass)
                                 } else if (inputFile.isDirectory()) {
+                                    //不处理不开混淆的情况
                                     //intermediates/classes/debug
                                     def extensions = [SdkConstants.EXT_CLASS] as String[]
 

@@ -11,6 +11,9 @@ import org.gradle.api.tasks.Input
 class RocooFixExtension {
     @Input
     boolean enable = false
+    
+    @Input
+    boolean scanref = false
 
     @Input
     HashSet<String> includePackage = [];

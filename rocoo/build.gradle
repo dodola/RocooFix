@@ -9,7 +9,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.1.0'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
-
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
     }
 }
 plugins {
@@ -22,7 +22,7 @@ group = 'com.dodola'
 version = '1.0'
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
+//apply plugin: 'com.jfrog.bintray'
 
 android {
     compileSdkVersion 23
@@ -58,7 +58,7 @@ install {
     repositories.mavenInstaller {
         pom {
             project {
-                packaging 'jar'
+                packaging 'aar'
                 name ''
                 url siteUrl
                 licenses {
@@ -85,6 +85,24 @@ install {
     }
 }
 
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+//task javadoc(type: Javadoc) {
+//    source = android.sourceSets.main.java.srcDirs
+//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+//}
+
+//task javadocJar(type: Jar, dependsOn: javadoc) {
+//    classifier = 'javadoc'
+//    from javadoc.destinationDir
+//}
+artifacts {
+//    archives javadocJar
+    archives sourcesJar
+}
 
 //
 //bintray {
@@ -102,6 +120,7 @@ install {
 //        licenses = ['MIT']
 //        labels = ['jar', 'android', 'hotfix']
 //        publicDownloadNumbers = true
+//        publish = true
 //        version {
 //            name = '1.0'
 //            vcsTag = '1.0'

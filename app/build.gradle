@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.dodola.rocoofix'
-//apply plugin: com.dodola.rocoofix.RocooFixPlugin
+//apply plugin: 'com.dodola.rocoofix'
+apply plugin: com.dodola.rocoofix.RocooFixPlugin
 
 repositories {
     maven {
@@ -18,16 +18,16 @@ android {
         versionCode 2
         versionName "1.0"
     }
-    productFlavors {
-        wandoujia {}
-    }
+//    productFlavors {
+//        wandoujia {}
+//    }
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -35,6 +35,7 @@ android {
 rocoo_fix {
     preVersionPath = '1'
     enable = true
+    scanref=true
 
 }
 dependencies {
