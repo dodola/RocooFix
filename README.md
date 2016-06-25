@@ -6,7 +6,10 @@ Another hotfix framework
 
 ![](images/device-2016-05-28-010835.png)
 
-
+## Bugfix
+1. 2016-06-26 
+* 增加了 Android N (API 24)的支持
+* 增加了关联引用的补丁制作模块，解决 ART NativeCode address 位置错误引起的崩溃问题，但是会造成包大小的增加，后期会支持微信提出的 Dexdiff 技术
 
 ## Features
 * **支持两种模式**：
