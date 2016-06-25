@@ -44,7 +44,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile group: 'commons-io', name: 'commons-io', version: '2.4'
+//    compile group: 'commons-io', name: 'commons-io', version: '2.4'
     testCompile 'junit:junit:4.12'
 }
 
