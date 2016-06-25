@@ -62,9 +62,10 @@ class RocooFixPlugin implements Plugin<Project> {
                     Map hashMap = applyMapping(project, variant, proguardTask)
 
                     def dirName = variant.dirName
-                    def rocooFixRootDir = new File("${project.projectDir}/rocoofix/version" + variant.getVersionCode())//project/rocoofix/version11
-                    def outputDir = new File("${rocooFixRootDir}/${dirName}")//project/rocoofix/version11/debug
-                    def patchDir = new File("${outputDir}/patch")//project/rocoofix/version11/debug/patch
+
+                    def rocooFixRootDir = new File("${project.projectDir}${File.separator}rocoofix${File.separator}version" + variant.getVersionCode())//project/rocoofix/version11
+                    def outputDir = new File("${rocooFixRootDir}${File.separator}${dirName}")//project/rocoofix/version11/debug
+                    def patchDir = new File("${outputDir}${File.separator}patch")//project/rocoofix/version11/debug/patch
                     def hashFile = new File(outputDir, "${HASH_TXT}")//project/rocoofix/version11/debug/hash.txt
                     println("=========" + rocooFixRootDir);
                     println("=========" + outputDir);
@@ -119,12 +120,12 @@ class RocooFixPlugin implements Plugin<Project> {
                         println("-------------------proguardTask:" + proguardTask)
 
                         if (proguardTask) {
-                            def mapFile = new File("${project.buildDir}/outputs/mapping/${variant.dirName}/mapping.txt")
+                            def mapFile = new File("${project.buildDir}${File.separator}outputs${File.separator}mapping${File.separator}${variant.dirName}${File.separator}mapping.txt")
                             println("-------------------mapFile:" + mapFile)
                             if (mapFile.exists()) {
                                 println("-------------------copy mapping file:")
 
-                                def newMapFile = new File("${rocooFixRootDir}/${dirName}/mapping.txt");
+                                def newMapFile = new File("${rocooFixRootDir}${File.separator}${dirName}${File.separator}mapping.txt");
                                 FileUtils.copyFile(mapFile, newMapFile)
                             }
                         }
@@ -208,11 +209,11 @@ class RocooFixPlugin implements Plugin<Project> {
                                                 if (NuwaSetUtils.isIncluded(classPath, includePackage)) {
                                                     if (!NuwaSetUtils.isExcluded(classPath, excludeClass)) {
                                                         def bytes = NuwaProcessor.processClass(inputClassFile)
-                                                        classPath = classPath.split("${dirName}/")[1]
+                                                        classPath = classPath.split("${dirName}${File.separator}")[1]
                                                         def hash = DigestUtils.shaHex(bytes)
                                                         hashFile.append(RocooUtils.format(classPath, hash))
                                                         if (RocooUtils.notSame(hashMap, classPath, hash)) {
-                                                            def file = new File("${patchDir}/${classPath}")
+                                                            def file = new File("${patchDir}${File.separator}${classPath}")
                                                             file.getParentFile().mkdirs()
                                                             if (!file.exists()) {
                                                                 file.createNewFile()
@@ -248,11 +249,11 @@ class RocooFixPlugin implements Plugin<Project> {
         RocooFixExtension rocooConfig = RocooFixExtension.getConfig(project);
         if (rocooConfig.preVersionPath != null) {
 
-            def preVersionPath = new File("${project.projectDir}/rocoofix/version" + rocooConfig.preVersionPath)
+            def preVersionPath = new File("${project.projectDir}${File.separator}rocoofix${File.separator}version" + rocooConfig.preVersionPath)
 //project/rocoofix/version11
 
             if (preVersionPath.exists()) {
-                def mappingFile = new File("${preVersionPath}/${variant.dirName}/${MAPPING_TXT}")
+                def mappingFile = new File("${preVersionPath}${File.separator}${variant.dirName}${File.separator}${MAPPING_TXT}")
                 if (mappingFile.exists()) {
                     if (proguardTask instanceof ProGuardTask) {
                         if (mappingFile.exists()) {
@@ -270,7 +271,7 @@ class RocooFixPlugin implements Plugin<Project> {
                 }
             }
             if (preVersionPath.exists()) {
-                def hashFile = new File("${preVersionPath}/${variant.dirName}/${HASH_TXT}")
+                def hashFile = new File("${preVersionPath}${File.separator}${variant.dirName}${File.separator}${HASH_TXT}")
                 hashMap = RocooUtils.parseMap(hashFile)
 
             }

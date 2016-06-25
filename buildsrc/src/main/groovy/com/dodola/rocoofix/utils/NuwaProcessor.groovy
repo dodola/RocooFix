@@ -76,7 +76,6 @@ class NuwaProcessor {
                     hashFile.append(RocooUtils.format(entryName, hash))
 
                     if (RocooUtils.notSame(map, entryName, hash)) {
-                        println("file notSame:--------------->" + entryName)
 
                         def entryFile = new File("${patchDir}/${entryName}")
                         entryFile.getParentFile().mkdirs()
