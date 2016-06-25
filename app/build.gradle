@@ -27,7 +27,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -35,13 +35,13 @@ android {
 rocoo_fix {
     preVersionPath = '1'
     enable = true
-    scanref=true
+    scanref=false
 
 }
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
-//    compile project(':rocoo')
-    compile 'com.dodola:rocoo:1.0'
+    compile project(':rocoo')
+//    compile 'com.dodola:rocoo:1.0'
 }

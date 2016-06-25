@@ -144,7 +144,9 @@ public final class RocooFix {
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
         } catch (Throwable e) {
+            e.printStackTrace();
         }
     }
 
@@ -176,8 +178,11 @@ public final class RocooFix {
 
     private static void installDexes(ClassLoader loader, File dexDir, List<File> files)
             throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException,
-            InvocationTargetException, NoSuchMethodException, IOException, InstantiationException {
+            InvocationTargetException, NoSuchMethodException, IOException, InstantiationException, ClassNotFoundException {
         if (!files.isEmpty()) {
+            if (Build.VERSION.SDK_INT >= 24) {
+                V24.install(loader, files, dexDir);
+            }
             if (Build.VERSION.SDK_INT >= 23) {
                 V23.install(loader, files, dexDir);
             } else if (Build.VERSION.SDK_INT >= 19) {
@@ -320,6 +325,32 @@ public final class RocooFix {
             loadDex.setAccessible(true);
 
             Object dex = loadDex.invoke(null, additionalClassPathEntries.get(0), optimizedDirectory);
+            Constructor<?> constructor = elementType.getConstructor(File.class, boolean.class, File.class, DexFile.class);
+            constructor.setAccessible(true);
+            Object element = constructor.newInstance(new File(""), false, additionalClassPathEntries.get(0), dex);
+
+            Object[] newEles = new Object[1];
+            newEles[0] = element;
+            expandFieldArray(dexPathList, "dexElements", newEles);
+        }
+
+    }
+
+    private static final class V24 {
+
+        private static void install(ClassLoader loader, List<File> additionalClassPathEntries,
+                                    File optimizedDirectory)
+                throws IllegalArgumentException, IllegalAccessException,
+                NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, ClassNotFoundException {
+
+            Field pathListField = findField(loader, "pathList");
+            Object dexPathList = pathListField.get(loader);
+            Field dexElement = findField(dexPathList, "dexElements");
+            Class<?> elementType = dexElement.getType().getComponentType();
+            Method loadDex = findMethod(dexPathList, "loadDexFile", File.class, File.class, ClassLoader.class, dexElement.getType());
+            loadDex.setAccessible(true);
+
+            Object dex = loadDex.invoke(null, additionalClassPathEntries.get(0), optimizedDirectory, loader, dexElement.get(dexPathList));
             Constructor<?> constructor = elementType.getConstructor(File.class, boolean.class, File.class, DexFile.class);
             constructor.setAccessible(true);
             Object element = constructor.newInstance(new File(""), false, additionalClassPathEntries.get(0), dex);

@@ -98,10 +98,10 @@ class NuwaProcessor {
             jarOutputStream.close();
             file.close();
 
-            if (jarFile.exists()) {
-                jarFile.delete()
-            }
-            optJar.renameTo(jarFile)
+//            if (jarFile.exists()) {
+//                jarFile.delete()
+//            }
+//            optJar.renameTo(jarFile)
         }
 
     }
@@ -159,10 +159,10 @@ class NuwaProcessor {
         outputStream.write(bytes)
         inputStream.close()
         outputStream.close()
-        if (file.exists()) {
-            file.delete()
-        }
-        optClass.renameTo(file)
+//        if (file.exists()) {
+//            file.delete()
+//        }
+//        optClass.renameTo(file)
         return bytes
     }
 }

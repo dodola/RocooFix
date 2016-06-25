@@ -43,8 +43,8 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:23.+'
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile group: 'commons-io', name: 'commons-io', version: '2.4'
     testCompile 'junit:junit:4.12'
 }
 
