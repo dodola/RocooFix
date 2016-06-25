@@ -105,7 +105,7 @@ rocoo_fix {
     
     enable = true//注意：关掉此项会无法生成Hash.txt文件
     
-    scanref=true//默认为 false，开启这个选项会将与补丁 class 相引用的 class 都打入包中来解决 ART 虚拟机崩溃问题
+    scanref=true//默认为 false，开启这个选项会将与补丁 class 相引用的 class 都打入包中来解决 ART 虚拟机崩溃问题，功能 Beta 中
 }
 
 dependencies {
