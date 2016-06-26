@@ -8,13 +8,13 @@ Another hotfix framework
 
 ## Bugfix
 1. 2016-06-26 
-* 增加了 Android N (API 24)的支持
-* 增加了关联引用的补丁制作模块，解决 ART NativeCode address 位置错误引起的崩溃问题，但是会造成包大小的增加，后期会支持微信提出的 Dexdiff 技术
+   * 增加了 Android N (API 24)的支持
+   * 增加了关联引用的补丁制作模块，解决 ART NativeCode address 位置错误引起的崩溃问题，但是会造成包大小的增加，后期会支持微信提出的 Dexdiff 技术
 
 ## Features
 * **支持两种模式**：
-    1. 静态修复某种情况下需要重启应用。
-    2. 动态修复，无需重启应用即可生效。
+  1. 静态修复某种情况下需要重启应用。
+  2. 动态修复，无需重启应用即可生效。
 * **支持DalvikVM和ART VM**
 * 制作补丁更加方便
 * 支持`com.android.tools.build:gradle:1.3.0`->`com.android.tools.build:gradle:2.1.0` (解决了Nuwa 这个[issue][1])
@@ -154,12 +154,12 @@ public class HelloHack {
 
 此时`build.gradle`里的`VersionCode`是`1`
 
-![enter description here][2]
+![enter description here](./images/1464264036709.jpg "1464264036709.jpg")
 
 
 2. 运行一次应用，这时会在`app`的目录下生成如下文件：
 
-![enter description here][3]
+![enter description here](./images/1464264178068.jpg "1464264178068.jpg")
 
 这里可以看做是我们已经发布版本的`hash.txt`
 
@@ -191,23 +191,19 @@ rocoo_fix {
 
 5. 修改当前项目的`versionCode`为`2`，说明这个是一个升级fix版本。
 
-![enter description here][4]
+![enter description here](./images/1464264514735.jpg "1464264514735.jpg")
 
 6. 正常发布应用，此时会在下图所示的路径中生成补丁文件：
-![enter description here][5]
+   ![enter description here](./images/1464264669463.jpg "1464264669463.jpg")
 
 
 7. 我们可以反编译一下来确认补丁是否正常
-![enter description here][6]
+   ![enter description here](./images/1464264736467.jpg "1464264736467.jpg")
 
   
 ## 相关项目
 [Legend](https://github.com/asLody/legend)
 
+[enter description here]:./images/1464264178068.jpg"1464264178068.jpg"[enter description here]:./images/1464264514735.jpg"1464264514735.jpg"[enter description here]:./images/1464264669463.jpg"1464264669463.jpg"[enter description here]:./images/1464264736467.jpg"1464264736467.jpg"[enter description here]:./images/1464264036709.jpg"1464264036709.jpg"
 
-  [1]: https://github.com/jasonross/Nuwa/issues/65
-  [2]: ./images/1464264036709.jpg "1464264036709.jpg"
-  [3]: ./images/1464264178068.jpg "1464264178068.jpg"
-  [4]: ./images/1464264514735.jpg "1464264514735.jpg"
-  [5]: ./images/1464264669463.jpg "1464264669463.jpg"
-  [6]: ./images/1464264736467.jpg "1464264736467.jpg"
+[1]:https://github.com/jasonross/Nuwa/issues/65
