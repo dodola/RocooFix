@@ -119,9 +119,25 @@ class NuwaProcessor {
                     @Override
                     void visitInsn(int opcode) {
                         if ("<init>".equals(name) && opcode == Opcodes.RETURN) {
-                            super.visitLdcInsn(Type.getType("Lcom/dodola/rocoo/Hack;"));
+                            Label l1 = new Label();
+                            super.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/Boolean", "FALSE", "Ljava/lang/Boolean;");
+                            super.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Boolean", "booleanValue", "()Z", false);
+                            super.visitJumpInsn(Opcodes.IFEQ, l1);
+                            super.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+                            super.visitLdcInsn(Type.getType("Lcn/jiajixin/nuwa/Hack;"));
+                            super.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/Object;)V", false);
+                            super.visitLabel(l1);
                         }
                         super.visitInsn(opcode);
+                    }
+
+                    @Override
+                    public void visitMaxs(int maxStack, int maxLocal) {
+                        if ("<init>".equals(name)) {
+                            super.visitMaxs(maxStack + 2, maxLocal);
+                        } else {
+                            super.visitMaxs(maxStack, maxLocal);
+                        }
                     }
                 }
                 return mv;
