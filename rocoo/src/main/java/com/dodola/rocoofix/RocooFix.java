@@ -182,8 +182,7 @@ public final class RocooFix {
         if (!files.isEmpty()) {
             if (Build.VERSION.SDK_INT >= 24) {
                 V24.install(loader, files, dexDir);
-            }
-            if (Build.VERSION.SDK_INT >= 23) {
+            } else if (Build.VERSION.SDK_INT >= 23) {
                 V23.install(loader, files, dexDir);
             } else if (Build.VERSION.SDK_INT >= 19) {
                 V19.install(loader, files, dexDir);
