@@ -27,6 +27,7 @@ class RocooFixPlugin implements Plugin<Project> {
     private static final String MAPPING_TXT = "mapping.txt"
     private static final String HASH_TXT = "hash.txt"
     public static RocooFixExtension rocooConfig
+    public boolean showLog = false;
 
     @Override
     public void apply(Project project) {
@@ -56,7 +57,6 @@ class RocooFixPlugin implements Plugin<Project> {
                     def proguardTask = project.tasks.findByName(RocooUtils.getProGuardTaskName(project, variant))
 //                    def processManifestTask = project.tasks.findByName(RocooUtils.getProcessManifestTaskName(project, variant))
 
-                    println("manifests:" + variant.outputs.processManifest.manifestOutputFile)
                     def manifestFile = variant.outputs.processManifest.manifestOutputFile[0]
 
                     Map hashMap = applyMapping(project, variant, proguardTask)
@@ -67,12 +67,13 @@ class RocooFixPlugin implements Plugin<Project> {
                     def outputDir = new File("${rocooFixRootDir}${File.separator}${dirName}")//project/rocoofix/version11/debug
                     def patchDir = new File("${outputDir}${File.separator}patch")//project/rocoofix/version11/debug/patch
                     def hashFile = new File(outputDir, "${HASH_TXT}")//project/rocoofix/version11/debug/hash.txt
-                    println("=========" + rocooFixRootDir);
-                    println("=========" + outputDir);
-                    println("=========" + patchDir);
-                    println("=========" + hashFile);
-                    println("==========" + variant.getVersionCode())
-
+                    if(showLog) {
+                        println("=========" + rocooFixRootDir);
+                        println("=========" + outputDir);
+                        println("=========" + patchDir);
+                        println("=========" + hashFile);
+                        println("==========" + variant.getVersionCode())
+                    }
                     if (!rocooFixRootDir.exists()) {
                         rocooFixRootDir.mkdirs();
                     }
@@ -86,7 +87,6 @@ class RocooFixPlugin implements Plugin<Project> {
                     def rocooPatchTaskName = "applyRocoo${variant.name.capitalize()}Patch"
                     project.task(rocooPatchTaskName) << {
                         if (patchDir) {
-                            println("==============" + rocooPatchTaskName)
                             RocooUtils.makeDex(project, patchDir)
                         }
                     }
@@ -117,13 +117,10 @@ class RocooFixPlugin implements Plugin<Project> {
                     }
 
                     Closure copyMappingClosure = {
-                        println("-------------------proguardTask:" + proguardTask)
 
                         if (proguardTask) {
                             def mapFile = new File("${project.buildDir}${File.separator}outputs${File.separator}mapping${File.separator}${variant.dirName}${File.separator}mapping.txt")
-                            println("-------------------mapFile:" + mapFile)
                             if (mapFile.exists()) {
-                                println("-------------------copy mapping file:")
 
                                 def newMapFile = new File("${rocooFixRootDir}${File.separator}${dirName}${File.separator}mapping.txt");
                                 FileUtils.copyFile(mapFile, newMapFile)
@@ -131,8 +128,6 @@ class RocooFixPlugin implements Plugin<Project> {
                         }
                     }
 
-                    println("-------------------preDexTask:" + preDexTask)
-                    println("-------------------dexTask:" + dexTask)
 
                     if (preDexTask) {
                         def rocooJarBeforePreDex = "rocooJarBeforePreDex${variant.name.capitalize()}"
@@ -192,7 +187,6 @@ class RocooFixPlugin implements Plugin<Project> {
                             inputFiles.each { inputFile ->
 
                                 def path = inputFile.absolutePath
-                                println("rocoojarBefore----->" + path)
                                 if (path.endsWith(SdkConstants.DOT_JAR)) {
                                     NuwaProcessor.processJar(hashFile, inputFile, patchDir, hashMap, includePackage, excludeClass)
                                 } else if (inputFile.isDirectory()) {
@@ -229,7 +223,6 @@ class RocooFixPlugin implements Plugin<Project> {
                             }
                         }
                         def rocooJarBeforeDexTask = project.tasks[rocooJarBeforeDex]
-                        println("-------------------rocooClassTask:" + rocooJarBeforeDexTask)
 
                         rocooJarBeforeDexTask.dependsOn dexTask.taskDependencies.getDependencies(dexTask)
                         rocooJarBeforeDexTask.doFirst(prepareClosure)

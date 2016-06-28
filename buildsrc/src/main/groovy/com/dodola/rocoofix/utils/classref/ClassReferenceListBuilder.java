@@ -34,7 +34,6 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
@@ -177,7 +176,6 @@ public class ClassReferenceListBuilder {
             classNames.add(currentName);
             File entryFile = new File(patchDir + "/" + currentName);
             entryFile.getParentFile().mkdirs();
-            System.out.println(entryFile.getAbsolutePath());
 
 
             if (!entryFile.exists()) {
@@ -185,9 +183,9 @@ public class ClassReferenceListBuilder {
 //                Iterable<ClassPathElement> elements = path.getElements();
 //                for (ClassPathElement element : elements) {
 //                    InputStream in = element.open(currentName);
-                    byte[] bytes = NuwaProcessor.referHackWhenInit(classFile.getBytes().makeDataInputStream());
+                byte[] bytes = NuwaProcessor.referHackWhenInit(classFile.getBytes().makeDataInputStream());
 //                    System.out.println(classFile.getFilePath() + ",size:" + bytes.length);
-                    FileUtils.writeByteArrayToFile(entryFile, bytes);
+                FileUtils.writeByteArrayToFile(entryFile, bytes);
 //                }
             }
 //            NuwaProcessor.referHackWhenInit();

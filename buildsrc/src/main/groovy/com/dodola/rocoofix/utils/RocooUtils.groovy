@@ -22,7 +22,6 @@ public class RocooUtils {
         def notSame = false
         if (map) {
             def value = map.get(name)
-            println("notSame-------->" + value + "," + name + "," + hash)
             if (value) {
                 if (!value.equals(hash)) {
                     notSame = true
@@ -107,7 +106,6 @@ public class RocooUtils {
                 sdkDir = System.getenv("ANDROID_HOME")
             }
 
-            println("-----------sdkDir:" + sdkDir)
             if (sdkDir) {
                 def cmdExt = Os.isFamily(Os.FAMILY_WINDOWS) ? '.bat' : ''
                 def stdout = new ByteArrayOutputStream()
@@ -168,7 +166,6 @@ public class RocooUtils {
 
             dexTask.inputs.files.files.each {
                 if (it.exists()) {
-                    println("--------->" + it.absolutePath+","+"intermediates/classes/${variant.dirName}")
                     if (it.isDirectory()) {
                         Collection<File> jars = FileUtils.listFiles(it, extensions, true);
                         files.addAll(jars)

@@ -20,31 +20,6 @@ import java.util.zip.ZipEntry
  */
 class NuwaProcessor {
 
-//
-//    public void processClasses(File inputFile,  HashSet<String> includePackage, HashSet<String> excludeClass, String dirName, Map hashMap, File patchDir) {
-//        def path = inputFile.absolutePath
-//        println("====inputFile-------->" + path)
-//        if (path.endsWith(".class") && !path.contains("/R\$") && !path.endsWith("/R.class") && !path.endsWith("/BuildConfig.class")) {
-//            if (NuwaSetUtils.isIncluded(path, includePackage)) {
-//                if (!NuwaSetUtils.isExcluded(path, excludeClass)) {
-//                    def bytes = NuwaProcessor.processClass(inputFile)
-//                    path = path.split("${dirName}/")[1]
-//                    def hash = DigestUtils.shaHex(bytes)
-//                    hashFile.append(RocooUtils.format(path, hash))
-//
-//                    if (RocooUtils.notSame(hashMap, path, hash)) {
-//                        def file = new File("${patchDir}/${path}")
-//                        file.getParentFile().mkdirs()
-//                        if (!file.exists()) {
-//                            file.createNewFile()
-//                        }
-//                        FileUtils.writeByteArrayToFile(file, bytes)
-//                    }
-//                }
-//            }
-//        }
-//    }
-
 
     public
     static processJar(File hashFile, File jarFile, File patchDir, Map map, HashSet<String> includePackage, HashSet<String> excludeClass) {
@@ -72,7 +47,6 @@ class NuwaProcessor {
                     jarOutputStream.write(bytes);
 
                     def hash = DigestUtils.shaHex(bytes)
-                    println("file hash:--------------->" + entryName + ":" + hash)
                     hashFile.append(RocooUtils.format(entryName, hash))
 
                     if (RocooUtils.notSame(map, entryName, hash)) {
