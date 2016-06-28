@@ -204,6 +204,6 @@ rocoo_fix {
 ## 相关项目
 [Legend](https://github.com/asLody/legend)
 
-[enter description here]:./images/1464264178068.jpg"1464264178068.jpg"[enter description here]:./images/1464264514735.jpg"1464264514735.jpg"[enter description here]:./images/1464264669463.jpg"1464264669463.jpg"[enter description here]:./images/1464264736467.jpg"1464264736467.jpg"[enter description here]:./images/1464264036709.jpg"1464264036709.jpg"
+
 
 [1]:https://github.com/jasonross/Nuwa/issues/65
