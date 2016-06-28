@@ -124,7 +124,7 @@ class NuwaProcessor {
                             super.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Boolean", "booleanValue", "()Z", false);
                             super.visitJumpInsn(Opcodes.IFEQ, l1);
                             super.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-                            super.visitLdcInsn(Type.getType("LLcom/dodola/rocoo/Hack;"));
+                            super.visitLdcInsn(Type.getType("Lcom/dodola/rocoo/Hack;"));
                             super.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/Object;)V", false);
                             super.visitLabel(l1);
                         }
