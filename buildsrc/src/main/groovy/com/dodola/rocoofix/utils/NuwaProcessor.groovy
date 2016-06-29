@@ -3,8 +3,6 @@
  */
 package com.dodola.rocoofix.utils
 
-import com.dodola.rocoofix.RocooFixPlugin
-import com.dodola.rocoofix.utils.classref.ClassReferenceListBuilder
 import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.IOUtils
@@ -14,7 +12,6 @@ import java.util.jar.JarEntry
 import java.util.jar.JarFile
 import java.util.jar.JarOutputStream
 import java.util.zip.ZipEntry
-
 /**
  * Created by jixin.jia on 15/11/10.
  */
@@ -28,8 +25,8 @@ class NuwaProcessor {
             def optJar = new File(jarFile.getParent(), jarFile.name + ".opt")
             def file = new JarFile(jarFile);
 
-            ClassReferenceListBuilder referenceListBuilder = new ClassReferenceListBuilder(patchDir.getAbsolutePath());
-            referenceListBuilder.addRoots(jarFile.getAbsolutePath());
+//            ClassReferenceListBuilder referenceListBuilder = new ClassReferenceListBuilder(patchDir.getAbsolutePath());
+//            referenceListBuilder.addRoots(jarFile.getAbsolutePath());
 
             Enumeration enumeration = file.entries();
             JarOutputStream jarOutputStream = new JarOutputStream(new FileOutputStream(optJar));
@@ -45,25 +42,25 @@ class NuwaProcessor {
                 if (shouldProcessClassInJar(entryName, includePackage, excludeClass)) {
                     def bytes = referHackWhenInit(inputStream);
                     jarOutputStream.write(bytes);
-
                     def hash = DigestUtils.shaHex(bytes)
                     hashFile.append(RocooUtils.format(entryName, hash))
 
                     if (RocooUtils.notSame(map, entryName, hash)) {
 
-                        def entryFile = new File("${patchDir}/${entryName}")
+                        def entryFile = new File("${patchDir}${File.separator}${entryName}")
                         entryFile.getParentFile().mkdirs()
                         if (!entryFile.exists()) {
                             entryFile.createNewFile()
                         }
                         FileUtils.writeByteArrayToFile(entryFile, bytes)
 
-                        if (RocooFixPlugin.rocooConfig.scanref) {
-                            referenceListBuilder.run(entryName)
-                            referenceListBuilder.clearCache()
-                        }
+//                        if (RocooFixPlugin.rocooConfig.scanref) {
+//                            referenceListBuilder.run(entryName)
+//                            referenceListBuilder.clearCache()
+//                        }
                     }
-                } else {
+                }
+                else {
                     jarOutputStream.write(IOUtils.toByteArray(inputStream));
                 }
                 jarOutputStream.closeEntry();
@@ -71,10 +68,10 @@ class NuwaProcessor {
             jarOutputStream.close();
             file.close();
 
-//            if (jarFile.exists()) {
-//                jarFile.delete()
-//            }
-//            optJar.renameTo(jarFile)
+            if (jarFile.exists()) {
+                jarFile.delete()
+            }
+            optJar.renameTo(jarFile)
         }
 
     }
@@ -148,10 +145,10 @@ class NuwaProcessor {
         outputStream.write(bytes)
         inputStream.close()
         outputStream.close()
-//        if (file.exists()) {
-//            file.delete()
-//        }
-//        optClass.renameTo(file)
+        if (file.exists()) {
+            file.delete()
+        }
+        optClass.renameTo(file)
         return bytes
     }
 }

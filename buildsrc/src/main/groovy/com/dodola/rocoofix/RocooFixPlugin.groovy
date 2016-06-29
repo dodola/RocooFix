@@ -67,19 +67,22 @@ class RocooFixPlugin implements Plugin<Project> {
                     def outputDir = new File("${rocooFixRootDir}${File.separator}${dirName}")//project/rocoofix/version11/debug
                     def patchDir = new File("${outputDir}${File.separator}patch")//project/rocoofix/version11/debug/patch
                     def hashFile = new File(outputDir, "${HASH_TXT}")//project/rocoofix/version11/debug/hash.txt
-                    if(showLog) {
-                        println("=========" + rocooFixRootDir);
-                        println("=========" + outputDir);
-                        println("=========" + patchDir);
-                        println("=========" + hashFile);
-                        println("==========" + variant.getVersionCode())
-                    }
+//                    if(showLog) {
+                    println("=========" + rocooFixRootDir);
+                    println("=========" + outputDir);
+                    println("=========" + patchDir);
+                    println("=========" + hashFile);
+                    println("==========" + variant.getVersionCode())
+//                    }
                     if (!rocooFixRootDir.exists()) {
                         rocooFixRootDir.mkdirs();
                     }
                     if (!outputDir.exists()) {
                         outputDir.mkdirs();
                     }
+//                    else {
+//                        FileUtils.deleteDirectory(outputDir)
+//                    }
                     if (!patchDir.exists()) {
                         patchDir.mkdirs();
                     }
@@ -157,7 +160,7 @@ class RocooFixPlugin implements Plugin<Project> {
                                     if (NuwaSetUtils.isIncluded(path, includePackage)) {
                                         if (!NuwaSetUtils.isExcluded(path, excludeClass)) {
                                             def bytes = NuwaProcessor.processClass(inputFile)
-                                            path = path.split("${dirName}/")[1]
+                                            path = path.split("${dirName}${File.separator}")[1]
                                             def hash = DigestUtils.shaHex(bytes)
                                             hashFile.append(RocooUtils.format(path, hash))
 
