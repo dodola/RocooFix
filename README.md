@@ -131,7 +131,7 @@ dependencies {
 
 ```
 -keep class com.dodola.rocoofix.** {*;}
--keep class com.lody.legend.* {*;}
+-keep class com.lody.legend.** {*;}
 ```
 
 ## Build Patch
