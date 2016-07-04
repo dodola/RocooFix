@@ -66,6 +66,15 @@ public final class RocooFix {
     }
 
     /**
+     * 另一种方法去掉Preverify标志 beta中
+     *
+     * @param context
+     */
+    public static void HackLoader(Context context) {
+        ClassLoaderHack.initHack(context);
+    }
+
+    /**
      * 从Assets里取出补丁，一般用于测试
      *
      * @param context

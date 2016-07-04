@@ -160,7 +160,7 @@ class RocooFixPlugin implements Plugin<Project> {
                                     if (NuwaSetUtils.isIncluded(path, includePackage)) {
                                         if (!NuwaSetUtils.isExcluded(path, excludeClass)) {
                                             def bytes = NuwaProcessor.processClass(inputFile)
-                                            path = path.split("${dirName}${File.separator}")[1]
+                                            path = path.split("${dirName}/")[1]
                                             def hash = DigestUtils.shaHex(bytes)
                                             hashFile.append(RocooUtils.format(path, hash))
 
@@ -206,7 +206,7 @@ class RocooFixPlugin implements Plugin<Project> {
                                                 if (NuwaSetUtils.isIncluded(classPath, includePackage)) {
                                                     if (!NuwaSetUtils.isExcluded(classPath, excludeClass)) {
                                                         def bytes = NuwaProcessor.processClass(inputClassFile)
-                                                        classPath = classPath.split("${dirName}${File.separator}")[1]
+                                                        classPath = classPath.split("${dirName}/")[1]
                                                         def hash = DigestUtils.shaHex(bytes)
                                                         hashFile.append(RocooUtils.format(classPath, hash))
                                                         if (RocooUtils.notSame(hashMap, classPath, hash)) {
