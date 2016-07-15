@@ -3,6 +3,8 @@
  */
 package com.dodola.rocoofix.utils
 
+import com.dodola.rocoofix.RocooFixPlugin
+import com.dodola.rocoofix.ref.Path
 import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.IOUtils
@@ -24,7 +26,8 @@ class NuwaProcessor {
 
             def optJar = new File(jarFile.getParent(), jarFile.name + ".opt")
             def file = new JarFile(jarFile);
-
+            def  path = new Path(jarFile.getAbsolutePath());
+            com.dodola.rocoofix.ref.ClassReferenceListBuilder mainListBuilder = new com.dodola.rocoofix.ref.ClassReferenceListBuilder(path);
 //            ClassReferenceListBuilder referenceListBuilder = new ClassReferenceListBuilder(patchDir.getAbsolutePath());
 //            referenceListBuilder.addRoots(jarFile.getAbsolutePath());
 
@@ -53,7 +56,9 @@ class NuwaProcessor {
                             entryFile.createNewFile()
                         }
                         FileUtils.writeByteArrayToFile(entryFile, bytes)
-
+                        if (RocooFixPlugin.rocooConfig.scanref) {
+                            mainListBuilder.addRootsV2(entryName)
+                        }
 //                        if (RocooFixPlugin.rocooConfig.scanref) {
 //                            referenceListBuilder.run(entryName)
 //                            referenceListBuilder.clearCache()
@@ -65,6 +70,16 @@ class NuwaProcessor {
                 }
                 jarOutputStream.closeEntry();
             }
+            //
+            for (String className : mainListBuilder.getClassNames()) {
+                //遍历收集到的依赖,写入patchDir
+                ZipEntry zipEntry = new ZipEntry(className+".class");
+                InputStream inputStreamX = file.getInputStream(zipEntry);
+                def bytes = referHackWhenInit(inputStreamX);
+                def entryFile = new File("${patchDir}/${className}.class")
+                FileUtils.writeByteArrayToFile(entryFile, bytes)
+            }
+            //
             jarOutputStream.close();
             file.close();
 
