@@ -395,9 +395,9 @@ public final class RocooFix {
                     Log.w(TAG, "Exception in makeDexElement", e);
                 }
                 Field suppressedExceptionsField =
-                        findField(loader, "dexElementsSuppressedExceptions");
+                        findField(dexPathList, "dexElementsSuppressedExceptions");
                 IOException[] dexElementsSuppressedExceptions =
-                        (IOException[]) suppressedExceptionsField.get(loader);
+                        (IOException[]) suppressedExceptionsField.get(dexPathList);
 
                 if (dexElementsSuppressedExceptions == null) {
                     dexElementsSuppressedExceptions =
@@ -413,7 +413,7 @@ public final class RocooFix {
                     dexElementsSuppressedExceptions = combined;
                 }
 
-                suppressedExceptionsField.set(loader, dexElementsSuppressedExceptions);
+                suppressedExceptionsField.set(dexPathList, dexElementsSuppressedExceptions);
             }
         }
 
