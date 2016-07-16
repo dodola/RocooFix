@@ -34,7 +34,7 @@ public class PatchRefScan {
     }
     public static void addClasstoPatch(JarEntry jarEntry,String className,JarFile alljar,File patchDir) throws Exception{
         System.out.println("============addClasstoPatch======"+className);
-        File entryFile = new File("${patchDir}/${className}");
+        File entryFile = new File(patchDir,className);
         if(!entryFile.exists()){
             InputStream inputStreamX = alljar.getInputStream(jarEntry);
             byte[] bytes = NuwaProcessor.referHackWhenInit(inputStreamX);
