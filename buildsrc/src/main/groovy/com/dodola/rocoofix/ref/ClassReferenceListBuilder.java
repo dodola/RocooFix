@@ -27,6 +27,10 @@ public class ClassReferenceListBuilder {
     private final Path path;
     private final Set<String> classNames = new HashSet<String>();
 
+    public  void clearAllForReuse(){
+        classNames.clear();
+    }
+
     public ClassReferenceListBuilder(Path path) {
         this.path = path;
     }

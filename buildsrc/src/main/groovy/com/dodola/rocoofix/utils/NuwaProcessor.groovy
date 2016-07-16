@@ -4,6 +4,7 @@
 package com.dodola.rocoofix.utils
 
 import com.dodola.rocoofix.RocooFixPlugin
+import com.dodola.rocoofix.ref.PatchRefScan
 import com.dodola.rocoofix.ref.Path
 import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.io.FileUtils
@@ -28,9 +29,7 @@ class NuwaProcessor {
             def file = new JarFile(jarFile);
             def  path = new Path(jarFile.getAbsolutePath());
             com.dodola.rocoofix.ref.ClassReferenceListBuilder mainListBuilder = new com.dodola.rocoofix.ref.ClassReferenceListBuilder(path);
-//            ClassReferenceListBuilder referenceListBuilder = new ClassReferenceListBuilder(patchDir.getAbsolutePath());
-//            referenceListBuilder.addRoots(jarFile.getAbsolutePath());
-
+            def patchClasss= new HashSet<String>();
             Enumeration enumeration = file.entries();
             JarOutputStream jarOutputStream = new JarOutputStream(new FileOutputStream(optJar));
 
@@ -57,12 +56,11 @@ class NuwaProcessor {
                         }
                         FileUtils.writeByteArrayToFile(entryFile, bytes)
                         if (RocooFixPlugin.rocooConfig.scanref) {
+                            //收集补丁类
+                            patchClasss.add(entryName)
+                            System.out.println("============patchClasss add======"+entryName)
                             mainListBuilder.addRootsV2(entryName)
                         }
-//                        if (RocooFixPlugin.rocooConfig.scanref) {
-//                            referenceListBuilder.run(entryName)
-//                            referenceListBuilder.clearCache()
-//                        }
                     }
                 }
                 else {
@@ -71,15 +69,36 @@ class NuwaProcessor {
                 jarOutputStream.closeEntry();
             }
             //
-            for (String className : mainListBuilder.getClassNames()) {
-                //遍历收集到的依赖,写入patchDir
-                ZipEntry zipEntry = new ZipEntry(className+".class");
-                InputStream inputStreamX = file.getInputStream(zipEntry);
-                def bytes = referHackWhenInit(inputStreamX);
-                def entryFile = new File("${patchDir}/${className}.class")
-                FileUtils.writeByteArrayToFile(entryFile, bytes)
+            if (RocooFixPlugin.rocooConfig.scanref) {
+                //step 1 查找补丁类的相关依赖(主要为了找到继承)
+                for (String className : mainListBuilder.getClassNames()) {
+                    System.out.println("===========step1==="+className)
+                    def entryFile = new File("${patchDir}/${className}.class")
+                    if(entryFile.exists()){
+                        //补丁中存在,跳过
+                          continue;
+                    }
+                    //遍历收集到的依赖,写入patchDir
+                    ZipEntry zipEntry = new ZipEntry(className+".class");
+                    InputStream inputStreamX = file.getInputStream(zipEntry);
+                    def bytes = referHackWhenInit(inputStreamX);
+                    FileUtils.writeByteArrayToFile(entryFile, bytes)
+                }
+                mainListBuilder.clearAllForReuse();
+
+                //step 2 遍历整个jar包 查找调用了补丁的类(主要找调用了补丁的类)
+                System.out.println("============patchClasss======"+patchClasss.size())
+                Enumeration enumerationForScanref = file.entries();
+                while (enumerationForScanref.hasMoreElements()) {
+                    JarEntry jarEntry = (JarEntry) enumerationForScanref.nextElement();
+                    String entryName = jarEntry.getName();
+                    mainListBuilder.addRootsV2(entryName)
+                    def allrefs = mainListBuilder.getClassNames();
+                    PatchRefScan.addClassIfRefPatchClass(jarEntry,entryName,allrefs,patchClasss,file,patchDir);
+                    mainListBuilder.clearAllForReuse();
+                }
+                //
             }
-            //
             jarOutputStream.close();
             file.close();
 
@@ -90,6 +109,8 @@ class NuwaProcessor {
         }
 
     }
+
+
 
     //refer hack class when object init
     public static byte[] referHackWhenInit(InputStream inputStream) {
