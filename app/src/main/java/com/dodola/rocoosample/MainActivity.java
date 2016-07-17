@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.dodola.rocoofix.RocooFix;
+import com.dodola.rocoosample.Ref.RefByHelloHack;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -21,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 HelloHack hack = new HelloHack();
+                RefByHelloHack aaa=new RefByHelloHack();
+                Toast.makeText(MainActivity.this, aaa.showHello(), Toast.LENGTH_SHORT).show();
                 Toast.makeText(MainActivity.this, hack.showHello(), Toast.LENGTH_SHORT).show();
             }
         });
