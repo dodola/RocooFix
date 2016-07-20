@@ -105,7 +105,8 @@ class NuwaProcessor {
             if (jarFile.exists()) {
                 jarFile.delete()
             }
-            optJar.renameTo(jarFile)
+//            optJar.renameTo(jarFile)
+            org.apache.commons.io.FileUtils.copyFile(optJar,jarFile);
         }
 
     }
