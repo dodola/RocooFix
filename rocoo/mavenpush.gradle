@@ -1,0 +1,77 @@
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+group = 'com.dodola'
+version = '1.1'
+def siteUrl = 'https://github.com/bintray/bintray-examples'
+def gitUrl = 'https://github.com/bintray/bintray-examples.git'
+bintray {
+    user = ''
+    key = ''
+    configurations = ['archives'] //When uploading configuration files
+    pkg {
+        repo = 'maven'
+        name = 'RocooFixLib'
+        desc = 'RocooFixLib'
+        websiteUrl = siteUrl
+        issueTrackerUrl = 'https://github.com/dodola/RocooFix/issues'
+        vcsUrl = gitUrl
+        licenses = ['Apache-2.0']
+        labels = ['jar', 'android', 'hotfix']
+        publicDownloadNumbers = true
+        publish = true //If version should be auto published after an upload
+        version {
+            name = '1.1'
+            desc = 'another hotfix framework'
+            vcsTag = '1.1'
+            attributes = ['gradle-plugin': 'rocoofix']
+        }
+    }
+}
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                name 'RocooFixLib'
+                url siteUrl
+                licenses {
+                    license {
+                        name 'The MIT License (MIT)'
+                        url 'https://github.com/dodola/RocooFix/raw/master/LICENSE'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'dodola'
+                        name 'Dodola'
+                        email 'dinophp@gmail.com'
+                    }
+                }
+                scm {
+                    connection 'https://github.com/dodola/RocooFix.git'
+                    developerConnection 'https://github.com/dodola/RocooFix.git'
+                    url siteUrl
+
+                }
+            }
+        }
+    }
+}
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+//task javadoc(type: Javadoc) {
+//    source = android.sourceSets.main.java.srcDirs
+//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+//}
+//
+//task javadocJar(type: Jar, dependsOn: javadoc) {
+//    classifier = 'javadoc'
+//    from javadoc.destinationDir
+//}
+artifacts {
+//    archives javadocJar
+    archives sourcesJar
+}
