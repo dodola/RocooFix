@@ -1,0 +1,45 @@
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven-publish'
+task sourceJar(type: Jar) {
+    description = "An archive of the source code for Maven Central"
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task groovydocJar(type: Jar) {
+    description = "An archive of the GroovyDocs for Maven Central"
+    classifier = 'javadoc'
+    from groovydoc
+}
+bintray {
+    user = ''
+    key = ''
+    publications = ['MyPublication']
+    dryRun = false //Whether to run this as dry-run, without deploying
+    publish = true //If version should be auto published after an upload
+    pkg {
+        repo = 'maven'
+        name = 'rocoofix'
+        desc = 'another hotfix framework'
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/dodola/RocooFix'
+        version {
+            name = '1.2.2'
+            desc = 'another hotfix framework'
+            released = new Date()
+            vcsTag = '1.2.2'
+            attributes = ['gradle-plugin': 'rocoofix']
+        }
+    }
+}
+//
+publishing {
+    publications {
+        MyPublication(MavenPublication) {
+            from components.java
+            groupId 'com.dodola'
+            artifactId 'rocoofix'
+            version '1.2.2'
+        }
+    }
+}
