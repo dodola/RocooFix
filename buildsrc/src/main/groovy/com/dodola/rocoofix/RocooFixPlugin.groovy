@@ -8,6 +8,7 @@ import com.android.build.gradle.AppPlugin
 import com.android.build.gradle.api.ApplicationVariant
 import com.android.build.gradle.api.BaseVariant
 import com.android.build.gradle.internal.transforms.ProGuardTransform
+import com.dodola.rocoofix.utils.ClassPathUtils
 import com.dodola.rocoofix.utils.NuwaProcessor
 import com.dodola.rocoofix.utils.NuwaSetUtils
 import com.dodola.rocoofix.utils.RocooUtils
@@ -55,7 +56,11 @@ class RocooFixPlugin implements Plugin<Project> {
                     def preDexTask = project.tasks.findByName(RocooUtils.getPreDexTaskName(project, variant))
                     def dexTask = project.tasks.findByName(RocooUtils.getDexTaskName(project, variant))
                     def proguardTask = project.tasks.findByName(RocooUtils.getProGuardTaskName(project, variant))
-//                    def processManifestTask = project.tasks.findByName(RocooUtils.getProcessManifestTaskName(project, variant))
+
+
+                    //about multidex task init
+                    def multidexTask = project.tasks.findByName("packageAll${variant.name.capitalize()}ClassesForMultiDex")
+
 
                     def manifestFile = variant.outputs.processManifest.manifestOutputFile[0]
 
@@ -86,6 +91,30 @@ class RocooFixPlugin implements Plugin<Project> {
                     if (!patchDir.exists()) {
                         patchDir.mkdirs();
                     }
+
+
+
+
+
+
+
+                    List<String> classPaths = ClassPathUtils.getClassLibraryPaths(project, proguardTask != null, multidexTask
+                            != null, variant.dirName)
+
+                    NuwaProcessor.initClassPaths(classPaths)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                     def rocooPatchTaskName = "applyRocoo${variant.name.capitalize()}Patch"
                     project.task(rocooPatchTaskName) << {
