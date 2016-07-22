@@ -80,12 +80,9 @@ RocooFix.applyPatchRuntime(Context context, String dexPath)  ;
 ```groovy
  repositories {
         jcenter()
-        maven {
-            url "http://dl.bintray.com/dodola/maven"
-        }
     }
  dependencies {
-        classpath 'com.dodola:rocoofix:1.1’
+        classpath 'com.dodola:rocoofix:1.2.2’
     }
 ```
 
@@ -95,9 +92,7 @@ RocooFix.applyPatchRuntime(Context context, String dexPath)  ;
 apply plugin: 'com.dodola.rocoofix'
 
 repositories {
-    maven {
-        url  "http://dl.bintray.com/dodola/maven"
-    }
+    jcenter()
 }
 
 rocoo_fix {
@@ -113,7 +108,7 @@ rocoo_fix {
 
 dependencies {
 
-    compile 'com.dodola:rocoo:1.0'
+    compile 'com.dodola:rocoo:1.1'
 }
 
 ```
@@ -197,8 +192,8 @@ rocoo_fix {
    ![enter description here](./images/1464264669463.jpg "1464264669463.jpg")
 
 
-7. 我们可以反编译一下来确认补丁是否正常
-   ![enter description here](./images/1464264736467.jpg "1464264736467.jpg")
+7. 我们可以反编译apk来确认插庄是否成功
+   ![enter description here](./images/QQ20160722-0.png "QQ20160722-0.png")
 
   
 ## 相关项目
