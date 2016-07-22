@@ -96,8 +96,8 @@ repositories {
 }
 
 rocoo_fix {
-    includePackage = ['com/dodola/rocoofix']//限制需要制作补丁的package
-    excludeClass = ['BaseApplication.class']//将不需要加到patch里的类写在这里
+    includePackage = ['com/dodola/rocoosample']//指定将来可能需要制作补丁的package(就是指定插庄的范围)
+    excludeClass = ['BaseApplication.class']//将不需要加到patch里的类写在这里(不需要插庄的类)
     
     preVersionPath = '1'//注意：此项属性只在需要制作补丁的时候才需开启！！如果不需要制作补丁则需要去掉此项
     
@@ -122,11 +122,14 @@ dependencies {
 然后将`build.gradle`的`versionCode`的号码修改，这里修改成`2`，只要和之前的版本不同就可以，没有具体值的要求
 
 
-## Proguard
+## Proguard(混淆)
 
 ```
 -keep class com.dodola.rocoofix.** {*;}
 -keep class com.lody.legend.** {*;}
+-keepclassmembers class com.dodola.rocoosample.** {
+  public <init>();//保留init,和include package保持一致
+}
 ```
 
 ## Build Patch
