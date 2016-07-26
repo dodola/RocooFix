@@ -4,6 +4,7 @@
 package com.dodola.rocoofix.utils
 
 import com.android.build.gradle.api.AndroidSourceSet
+import com.android.build.gradle.api.BaseVariant
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
 
@@ -14,10 +15,17 @@ import org.gradle.api.Project
 public class ClassPathUtils {
 
     public
-    static List<String> getClassLibraryPaths(Project project, boolean proguard, boolean multiDex, String variantDirName) {
+    static Set<String> getClassLibraryPaths(Project project, boolean proguard, boolean multiDex, BaseVariant variant) {
+        String variantDirName=variant.dirName;
+        Set<String> classPath = new HashSet<String>()
+        String http =addHttpClientPathIfNeed(project)
+        if(http){
+            //如果设置了org.apache.http.legacy 加入classpath
+            classPath.add(http)
+        }
         NamedDomainObjectContainer<AndroidSourceSet> sourceSets = project.android.sourceSets
         AndroidSourceSet sourceSet = sourceSets.findByName("main")
-        List<String> classPath = new ArrayList<>()
+//        List<String> classPath = new ArrayList<>()
         sourceSet.jniLibs.getSrcDirs().each {
             classPath.add(it.absolutePath + File.separator + "*")
         }
@@ -77,4 +85,14 @@ public class ClassPathUtils {
         return classPath
     }
 
+    public static String  addHttpClientPathIfNeed(Project project){
+        String[] lines= HttpClientJarPathUtil.getBuildFileLines(project.buildFile)
+        boolean has = HttpClientJarPathUtil.hasHttpLib(lines)
+        if(has){
+            String httpClientPath =HttpClientJarPathUtil.getHttpClientPath(project)
+            return httpClientPath;
+        }else{
+            return null;
+        }
+    }
 }

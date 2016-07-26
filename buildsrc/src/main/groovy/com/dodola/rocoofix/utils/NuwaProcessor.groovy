@@ -190,7 +190,7 @@ class NuwaProcessor {
     }
 
 
-    public static void initClassPaths(List<String> classpathes) {
+    public static void initClassPaths(Set<String> classpathes) {
         classPathList.clear();
         if (classpathes != null && classpathes.size() > 0) {
             for (String classpath : classpathes) {

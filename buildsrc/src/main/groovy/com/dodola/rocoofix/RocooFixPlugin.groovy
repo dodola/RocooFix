@@ -98,8 +98,8 @@ class RocooFixPlugin implements Plugin<Project> {
 
 
 
-                    List<String> classPaths = ClassPathUtils.getClassLibraryPaths(project, proguardTask != null, multidexTask
-                            != null, variant.dirName)
+                    Set<String> classPaths = ClassPathUtils.getClassLibraryPaths(project, proguardTask != null, multidexTask
+                            != null, variant)
 
                     NuwaProcessor.initClassPaths(classPaths)
 
