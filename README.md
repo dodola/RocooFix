@@ -6,6 +6,11 @@ Another hotfix framework
 
 ![](images/device-2016-05-28-010835.png)
 
+
+## 遇到问题的同学可以看一下这里
+https://github.com/shoyu666/derocoodemo
+
+
 ## Bugfix
 1. 2016-06-26 
    * 增加了 Android N (API 24)的支持
@@ -21,14 +26,11 @@ Another hotfix framework
 * 支持混淆和Mulitdex
 * 无需关注`hash.txt`和`mapping.txt`文件的生成和保存
 
-动态修复使用的是Lody的Legend项目，由于Dalvik的CLASS验证导致这个HOOK框架在Dalvik虚拟机下会崩溃，但是在RocooFix框架里正好可以欺骗这个验证，所以在Dalvik下不会出现原来的崩溃问题。具体情况可以参照[这篇日志](http://dodola.github.io/2016/05/02/legend_crash/)
-
 ## TODO
 * 补充单测
 * 兼容性测试
-* Legend 泄露问题
 * 目录规则调整
-* 上传lib库到maven
+* 对Win系统的支持
 
 ## Use
 ```java
