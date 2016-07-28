@@ -75,7 +75,26 @@ public class ClassReferenceListBuilder {
         }
     }
 
+    public void addSupperClass(String name){
+        if (name.endsWith(CLASS_EXTENSION)) {
+            classNames.add(name.substring(0, name.length() - CLASS_EXTENSION.length()));
+        }
+        if (name.endsWith(CLASS_EXTENSION)) {
+            DirectClassFile classFile;
+            try {
+                classFile = path.getClass(name);
+                CstType superClass = classFile.getSuperclass();
+                if (superClass != null) {
+                    String superClassName=superClass.getClassType().getClassName();
+                    classNames.add(superClassName);
+                }
+            } catch (FileNotFoundException e) {
+//                throw new IOException("Class " + name +
+//                        " is missing form original class path " + path, e);
+            }
 
+        }
+    }
     public void addRootsV2(String name){
         if (name.endsWith(CLASS_EXTENSION)) {
             classNames.add(name.substring(0, name.length() - CLASS_EXTENSION.length()));
