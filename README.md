@@ -6,6 +6,11 @@ Another hotfix framework
 
 ![](images/device-2016-05-28-010835.png)
 
+
+## 遇到问题的同学可以看一下这里
+https://github.com/shoyu666/derocoodemo
+
+
 ## Bugfix
 1. 2016-06-26 
    * 增加了 Android N (API 24)的支持
@@ -21,14 +26,11 @@ Another hotfix framework
 * 支持混淆和Mulitdex
 * 无需关注`hash.txt`和`mapping.txt`文件的生成和保存
 
-动态修复使用的是Lody的Legend项目，由于Dalvik的CLASS验证导致这个HOOK框架在Dalvik虚拟机下会崩溃，但是在RocooFix框架里正好可以欺骗这个验证，所以在Dalvik下不会出现原来的崩溃问题。具体情况可以参照[这篇日志](http://dodola.github.io/2016/05/02/legend_crash/)
-
 ## TODO
 * 补充单测
 * 兼容性测试
-* Legend 泄露问题
 * 目录规则调整
-* 上传lib库到maven
+* 对Win系统的支持
 
 ## Use
 ```java
@@ -76,7 +78,7 @@ RocooFix.applyPatchRuntime(Context context, String dexPath)  ;
 
 ## Configuration
 
-1. 在root的`build.gradle`增加如下内容：
+1 在root的`build.gradle`增加如下内容:
 ```groovy
  repositories {
         jcenter()
@@ -85,8 +87,7 @@ RocooFix.applyPatchRuntime(Context context, String dexPath)  ;
         classpath 'com.dodola:rocoofix:1.2.2’
     }
 ```
-
-2. 在你项目的`build.gradle`文件里添加如下配置
+2 在你项目的`build.gradle`文件里添加如下配置
 
 ```groovy
 apply plugin: 'com.dodola.rocoofix'
@@ -136,8 +137,7 @@ dependencies {
 
 下面演示一下使用项目demo生成补丁的制作过程
 
-1. 假如我们需要打补丁的文件是
-
+1 假如我们需要打补丁的文件是
 ```java
 package com.dodola.rocoosample;
 
@@ -147,22 +147,18 @@ public class HelloHack {
         return "hello world";
     }
 }
-
 ```
-
 此时`build.gradle`里的`VersionCode`是`1`
-
 ![enter description here](./images/1464264036709.jpg "1464264036709.jpg")
 
-
-2. 运行一次应用，这时会在`app`的目录下生成如下文件：
+2 运行一次应用，这时会在`app`的目录下生成如下文件：
 
 ![enter description here](./images/1464264178068.jpg "1464264178068.jpg")
 
 这里可以看做是我们已经发布版本的`hash.txt`
 
 
-3. 假设我们需要修复步骤1 里的`showHello`方法，修改如下：
+3 假设我们需要修复步骤1 里的`showHello`方法，修改如下：
 
 ```java
 package com.dodola.rocoosample;
@@ -176,7 +172,7 @@ public class HelloHack {
 
 ```
 
-4. 修改build.gradle 文件里`rocoo_fix`项，让其执行patch 的task，配置如下
+4 修改build.gradle 文件里`rocoo_fix`项，让其执行patch 的task，配置如下
 
 ```gradle
 rocoo_fix {
@@ -187,16 +183,18 @@ rocoo_fix {
 
 ```
 
-5. 修改当前项目的`versionCode`为`2`，说明这个是一个升级fix版本。
+5 修改当前项目的`versionCode`为`2`，说明这个是一个升级fix版本。
 
 ![enter description here](./images/1464264514735.jpg "1464264514735.jpg")
 
-6. 正常发布应用，此时会在下图所示的路径中生成补丁文件：
-   ![enter description here](./images/1464264669463.jpg "1464264669463.jpg")
+6 正常发布应用，此时会在下图所示的路径中生成补丁文件：
+
+![enter description here](./images/1464264669463.jpg "1464264669463.jpg")
 
 
-7. 我们可以反编译apk来确认插庄是否成功
-   ![enter description here](./images/QQ20160722-0.png "QQ20160722-0.png")
+7 我们可以反编译apk来确认插庄是否成功
+
+![enter description here](./images/QQ20160722-0.png "QQ20160722-0.png")
 
   
 ## 相关项目
