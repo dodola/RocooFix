@@ -52,10 +52,19 @@ class RocooFixPlugin implements Plugin<Project> {
 
                 variants.all { variant ->
 
+
+                    if(!variant.getBuildType().isMinifyEnabled()){
+                        println("不支持不开混淆的情况")
+                        return;
+                    }
+
+
                     def preDexTask = project.tasks.findByName(RocooUtils.getPreDexTaskName(project, variant))
                     def dexTask = project.tasks.findByName(RocooUtils.getDexTaskName(project, variant))
                     def proguardTask = project.tasks.findByName(RocooUtils.getProGuardTaskName(project, variant))
 //                    def processManifestTask = project.tasks.findByName(RocooUtils.getProcessManifestTaskName(project, variant))
+
+
 
                     def manifestFile = variant.outputs.processManifest.manifestOutputFile[0]
 
@@ -86,6 +95,7 @@ class RocooFixPlugin implements Plugin<Project> {
                     if (!patchDir.exists()) {
                         patchDir.mkdirs();
                     }
+
 
                     def rocooPatchTaskName = "applyRocoo${variant.name.capitalize()}Patch"
                     project.task(rocooPatchTaskName) << {
@@ -135,7 +145,7 @@ class RocooFixPlugin implements Plugin<Project> {
                     if (preDexTask) {
                         def rocooJarBeforePreDex = "rocooJarBeforePreDex${variant.name.capitalize()}"
                         project.task(rocooJarBeforePreDex) << {
-                            Set<File> inputFiles = preDexTask.inputs.files.files
+                            def inputFiles = preDexTask.inputs.files.files
 
                             inputFiles.each { inputFile ->
                                 def path = inputFile.absolutePath
@@ -154,7 +164,6 @@ class RocooFixPlugin implements Plugin<Project> {
                         project.task(rocooClassBeforeDex) << {
                             Set<File> inputFiles = dexTask.inputs.files.files
                             inputFiles.each { inputFile ->
-//                                NuwaProcessor.processClasses(inputFile, includePackage, excludeClass, dirName, hashMap, patchDir)
                                 def path = inputFile.absolutePath
                                 if (path.endsWith(".class") && !path.contains("/R\$") && !path.endsWith("/R.class") && !path.endsWith("/BuildConfig.class")) {
                                     if (NuwaSetUtils.isIncluded(path, includePackage)) {
@@ -182,7 +191,7 @@ class RocooFixPlugin implements Plugin<Project> {
                         rocooClassBeforeDexTask.doLast(copyMappingClosure)
                         rocooPatchTask.dependsOn rocooClassBeforeDexTask
                         dexTask.dependsOn rocooPatchTask
-                    } else if (dexTask != null) {
+                    } else if (dexTask != null) {//此处代码应该注掉
                         def rocooJarBeforeDex = "rocooJarBeforeDex${variant.name.capitalize()}"
                         project.task(rocooJarBeforeDex) << {
                             Set<File> inputFiles = RocooUtils.getDexTaskInputFiles(project, variant, dexTask)
@@ -206,7 +215,14 @@ class RocooFixPlugin implements Plugin<Project> {
                                                 if (NuwaSetUtils.isIncluded(classPath, includePackage)) {
                                                     if (!NuwaSetUtils.isExcluded(classPath, excludeClass)) {
                                                         def bytes = NuwaProcessor.processClass(inputClassFile)
-                                                        classPath = classPath.split("${dirName}${File.separator}")[1]
+
+
+                                                        if("\\".equals(File.separator)){
+                                                            classPath = classPath.split("${dirName}\\\\")[1]
+                                                        }else{
+                                                            classPath = classPath.split("${dirName}/")[1]
+                                                        }
+
                                                         def hash = DigestUtils.shaHex(bytes)
                                                         hashFile.append(RocooUtils.format(classPath, hash))
                                                         if (RocooUtils.notSame(hashMap, classPath, hash)) {
