@@ -117,7 +117,8 @@ class NuwaProcessor {
     //refer hack class when object init
     public static byte[] referHackWhenInit(InputStream inputStream) {
         ClassReader cr = new ClassReader(inputStream);
-        ClassWriter cw = new ClassWriter(cr, 0);
+        ClassWriter cw = new ClassWriter(cr,ClassWriter.COMPUTE_MAXS);
+        boolean hasHack=false;
         ClassVisitor cv = new ClassVisitor(Opcodes.ASM4, cw) {
             @Override
             public MethodVisitor visitMethod(int access, String name, String desc,
@@ -127,7 +128,8 @@ class NuwaProcessor {
                 mv = new MethodVisitor(Opcodes.ASM4, mv) {
                     @Override
                     void visitInsn(int opcode) {
-                        if ("<init>".equals(name) && opcode == Opcodes.RETURN) {
+                        if (("<init>".equals(name)||"<clinit>".equals(name))&& opcode == Opcodes.RETURN&&!hasHack) {
+                            hasHack=true;
                             Label l1 = new Label();
                             super.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/Boolean", "FALSE", "Ljava/lang/Boolean;");
                             super.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Boolean", "booleanValue", "()Z", false);
@@ -138,15 +140,6 @@ class NuwaProcessor {
                             super.visitLabel(l1);
                         }
                         super.visitInsn(opcode);
-                    }
-
-                    @Override
-                    public void visitMaxs(int maxStack, int maxLocal) {
-                        if ("<init>".equals(name)) {
-                            super.visitMaxs(maxStack + 2, maxLocal);
-                        } else {
-                            super.visitMaxs(maxStack, maxLocal);
-                        }
                     }
                 }
                 return mv;
