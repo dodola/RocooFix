@@ -8402,6 +8402,18 @@ android.support.v7.widget.ViewUtils -> android.support.v7.widget.dv:
     void computeFitSystemWindows(android.view.View,android.graphics.Rect,android.graphics.Rect) -> a
     void makeOptionalFitsSystemWindows(android.view.View) -> b
     void <clinit>() -> <clinit>
+com.dodola.rocoofix.ClassLoaderHack -> com.dodola.rocoofix.ClassLoaderHack:
+    boolean isArt -> isArt
+    java.lang.reflect.Method findClassMethod -> findClassMethod
+    void <init>(android.content.Context) -> <init>
+    void initHack(android.content.Context) -> initHack
+    void hackParent(java.lang.ClassLoader) -> hackParent
+    void clearPreverifiedState(java.lang.Class) -> clearPreverifiedState
+    java.lang.reflect.Method access$000() -> access$000
+com.dodola.rocoofix.ClassLoaderHack$PatchClassLoader -> com.dodola.rocoofix.ClassLoaderHack$PatchClassLoader:
+    java.lang.ClassLoader delegate -> delegate
+    void <init>(java.lang.ClassLoader,java.lang.ClassLoader) -> <init>
+    java.lang.Class findClass(java.lang.String) -> findClass
 com.dodola.rocoofix.RocooFix -> com.dodola.rocoofix.RocooFix:
     java.lang.String TAG -> TAG
     java.lang.String CODE_CACHE_NAME -> CODE_CACHE_NAME
@@ -8414,6 +8426,7 @@ com.dodola.rocoofix.RocooFix -> com.dodola.rocoofix.RocooFix:
     java.util.Map mFixedClass -> mFixedClass
     void <init>() -> <init>
     void init(android.content.Context) -> init
+    void HackLoader(android.content.Context) -> HackLoader
     void initPathFromAssets(android.content.Context,java.lang.String) -> initPathFromAssets
     void applyPatch(android.content.Context,java.lang.String) -> applyPatch
     android.content.pm.ApplicationInfo getApplicationInfo(android.content.Context) -> getApplicationInfo
@@ -8430,9 +8443,9 @@ com.dodola.rocoofix.RocooFix -> com.dodola.rocoofix.RocooFix:
     void fixClass(java.lang.Class,java.lang.ClassLoader) -> fixClass
     java.lang.Class initTargetClass(java.lang.Class) -> initTargetClass
     void replaceMethod(java.lang.Class,java.lang.reflect.Method,java.lang.ClassLoader) -> replaceMethod
-    java.lang.reflect.Field access$400(java.lang.Object,java.lang.String) -> access$400
-    java.lang.reflect.Method access$500(java.lang.Object,java.lang.String,java.lang.Class[]) -> access$500
-    void access$600(java.lang.Object,java.lang.String,java.lang.Object[]) -> access$600
+    java.lang.reflect.Field access$500(java.lang.Object,java.lang.String) -> access$500
+    java.lang.reflect.Method access$600(java.lang.Object,java.lang.String,java.lang.Class[]) -> access$600
+    void access$700(java.lang.Object,java.lang.String,java.lang.Object[]) -> access$700
     void <clinit>() -> <clinit>
 com.dodola.rocoofix.RocooFix$1 -> com.dodola.rocoofix.RocooFix$1:
     dalvik.system.DexFile val$dexFile -> val$dexFile
@@ -8442,20 +8455,24 @@ com.dodola.rocoofix.RocooFix$V14 -> com.dodola.rocoofix.RocooFix$V14:
     void <init>() -> <init>
     void install(java.lang.ClassLoader,java.util.List,java.io.File) -> install
     java.lang.Object[] makeDexElements(java.lang.Object,java.util.ArrayList,java.io.File) -> makeDexElements
-    void access$200(java.lang.ClassLoader,java.util.List,java.io.File) -> access$200
+    void access$300(java.lang.ClassLoader,java.util.List,java.io.File) -> access$300
 com.dodola.rocoofix.RocooFix$V19 -> com.dodola.rocoofix.RocooFix$V19:
     void <init>() -> <init>
     void install(java.lang.ClassLoader,java.util.List,java.io.File) -> install
     java.lang.Object[] makeDexElements(java.lang.Object,java.util.ArrayList,java.io.File,java.util.ArrayList) -> makeDexElements
-    void access$100(java.lang.ClassLoader,java.util.List,java.io.File) -> access$100
+    void access$200(java.lang.ClassLoader,java.util.List,java.io.File) -> access$200
 com.dodola.rocoofix.RocooFix$V23 -> com.dodola.rocoofix.RocooFix$V23:
+    void <init>() -> <init>
+    void install(java.lang.ClassLoader,java.util.List,java.io.File) -> install
+    void access$100(java.lang.ClassLoader,java.util.List,java.io.File) -> access$100
+com.dodola.rocoofix.RocooFix$V24 -> com.dodola.rocoofix.RocooFix$V24:
     void <init>() -> <init>
     void install(java.lang.ClassLoader,java.util.List,java.io.File) -> install
     void access$000(java.lang.ClassLoader,java.util.List,java.io.File) -> access$000
 com.dodola.rocoofix.RocooFix$V4 -> com.dodola.rocoofix.RocooFix$V4:
     void <init>() -> <init>
     void install(java.lang.ClassLoader,java.util.List) -> install
-    void access$300(java.lang.ClassLoader,java.util.List) -> access$300
+    void access$400(java.lang.ClassLoader,java.util.List) -> access$400
 com.dodola.rocoosample.HelloHack -> com.dodola.rocoosample.a:
     void <init>() -> <init>
     java.lang.String showHello() -> a
@@ -8466,6 +8483,9 @@ com.dodola.rocoosample.MainActivity$1 -> com.dodola.rocoosample.b:
     com.dodola.rocoosample.MainActivity this$0 -> a
     void <init>(com.dodola.rocoosample.MainActivity) -> <init>
     void onClick(android.view.View) -> onClick
+com.dodola.rocoosample.Ref.RefByHelloHack -> com.dodola.rocoosample.a.a:
+    void <init>() -> <init>
+    java.lang.String showHello() -> a
 com.dodola.rocoosample.RocooApplication -> com.dodola.rocoosample.RocooApplication:
     void <init>() -> <init>
     void attachBaseContext(android.content.Context) -> attachBaseContext
@@ -8802,6 +8822,14 @@ com.lody.legend.dalvik.DalvikMethodStruct -> com.lody.legend.dalvik.DalvikMethod
     java.lang.reflect.Method method -> method
     void <init>(java.lang.reflect.Method) -> <init>
     com.lody.legend.dalvik.DalvikMethodStruct of(java.lang.reflect.Method) -> of
+com.lody.legend.dalvik.ObjectStruct -> com.lody.legend.dalvik.ObjectStruct:
+    com.lody.legend.utility.StructMember clazz -> clazz
+    com.lody.legend.utility.StructMember instanceData -> instanceData
+    com.lody.legend.utility.StructMember descriptor -> descriptor
+    com.lody.legend.utility.StructMember descriptorAlloc -> descriptorAlloc
+    com.lody.legend.utility.StructMember accessFlags -> accessFlags
+    void <init>(long) -> <init>
+    com.lody.legend.dalvik.ObjectStruct of(long) -> of
 com.lody.legend.interfaces.Restoreable -> com.lody.legend.interfaces.Restoreable:
     void restore() -> restore
 com.lody.legend.io.SizeOf -> com.lody.legend.io.SizeOf:
