@@ -59,7 +59,7 @@ class NuwaProcessor {
                             //收集补丁类
                             patchClasss.add(entryName)
                             System.out.println("============patchClasss add======"+entryName)
-                            mainListBuilder.addRootsV2(entryName)
+                            mainListBuilder.addSupperClass(entryName)
                         }
                     }
                 }
@@ -72,14 +72,15 @@ class NuwaProcessor {
             if (RocooFixPlugin.rocooConfig.scanref) {
                 //step 1 查找补丁类的相关依赖(主要为了找到继承)
                 for (String className : mainListBuilder.getClassNames()) {
-                    System.out.println("===========step1==="+className)
                     def entryFile = new File("${patchDir}/${className}.class")
                     if(entryFile.exists()){
                         //补丁中存在,跳过
-                          continue;
+                        continue;
                     }
                     //遍历收集到的依赖,写入patchDir
-                    ZipEntry zipEntry = new ZipEntry(className+".class");
+                    ZipEntry zipEntry=file.getJarEntry(className+".class")
+                    if(zipEntry==null)continue;
+                    System.out.println("===========find  super class==="+className)
                     InputStream inputStreamX = file.getInputStream(zipEntry);
                     def bytes = referHackWhenInit(inputStreamX);
                     FileUtils.writeByteArrayToFile(entryFile, bytes)
