@@ -136,7 +136,7 @@ class NuwaProcessor {
                  mv = new MethodVisitor(Opcodes.ASM4, mv) {
                     @Override
                     void visitInsn(int opcode) {
-                        if (("<init>".equals(name) || "<clinit>".equals(name)) && opcode == Opcodes.RETURN && !hasHack) {
+                        if (("<init>".equals(name) || "<clinit>".equals(name)) && opcode == Opcodes.RETURN && !hasHackSuccess) {
                             //  第一次尝试hack
                             NuwaProcessor.hackProcess(mv)
                             hasHackSuccess = true;
