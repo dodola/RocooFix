@@ -15,6 +15,7 @@ import java.util.jar.JarEntry
 import java.util.jar.JarFile
 import java.util.jar.JarOutputStream
 import java.util.zip.ZipEntry
+
 /**
  * Created by jixin.jia on 15/11/10.
  */
@@ -117,27 +118,28 @@ class NuwaProcessor {
     //refer hack class when object init
     public static byte[] referHackWhenInit(InputStream inputStream) {
         ClassReader cr = new ClassReader(inputStream);
-        ClassWriter cw = new ClassWriter(cr,ClassWriter.COMPUTE_MAXS);
-        boolean hasHack=false;
+        ClassWriter cw = new ClassWriter(cr, ClassWriter.COMPUTE_MAXS);
+        boolean hasHackSuccess = false;
+        boolean isInterface = false;
         ClassVisitor cv = new ClassVisitor(Opcodes.ASM4, cw) {
+            @Override
+            void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
+                super.visit(version, access, name, signature, superName, interfaces)
+                //检查类型
+                isInterface = (access & Opcodes.ACC_INTERFACE) != 0;
+            }
+
             @Override
             public MethodVisitor visitMethod(int access, String name, String desc,
                                              String signature, String[] exceptions) {
-
                 MethodVisitor mv = super.visitMethod(access, name, desc, signature, exceptions);
-                mv = new MethodVisitor(Opcodes.ASM4, mv) {
+                 mv = new MethodVisitor(Opcodes.ASM4, mv) {
                     @Override
                     void visitInsn(int opcode) {
-                        if (("<init>".equals(name)||"<clinit>".equals(name))&& opcode == Opcodes.RETURN&&!hasHack) {
-                            hasHack=true;
-                            Label l1 = new Label();
-                            super.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/Boolean", "FALSE", "Ljava/lang/Boolean;");
-                            super.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Boolean", "booleanValue", "()Z", false);
-                            super.visitJumpInsn(Opcodes.IFEQ, l1);
-                            super.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-                            super.visitLdcInsn(Type.getType("Lcom/dodola/rocoo/Hack;"));
-                            super.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/Object;)V", false);
-                            super.visitLabel(l1);
+                        if (("<init>".equals(name) || "<clinit>".equals(name)) && opcode == Opcodes.RETURN && !hasHack) {
+                            //  第一次尝试hack
+                            NuwaProcessor.hackProcess(mv)
+                            hasHackSuccess = true;
                         }
                         super.visitInsn(opcode);
                     }
@@ -147,8 +149,48 @@ class NuwaProcessor {
 
         };
         cr.accept(cv, 0);
+        if (!hasHackSuccess && !isInterface) {
+            // has not hack and not interface
+            // 第二次尝试hack
+            return addCinitAndHack(cr,cw);
+        } else {
+            return cw.toByteArray();
+        }
+    }
+
+    /**
+     * add clinit and  do hack
+     * @param cr
+     * @param cw
+     * @return
+     */
+    private static  byte[] addCinitAndHack(ClassReader cr,ClassWriter cw) {
+        MethodVisitor constructor = cw.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "<clinit>", "()V", null, null);
+        constructor.visitCode();
+        hackProcess(constructor);
+        constructor.visitInsn(Opcodes.RETURN);
+//        constructor.visitMaxs(1 + 2, 1);
+        constructor.visitEnd();
+        ClassVisitor cv  = new ClassVisitor(Opcodes.ASM4, cw) {};
+        cr.accept(cv, 0);
         return cw.toByteArray();
     }
+
+    /**
+     * hack class
+     * @param v
+     */
+    public static void hackProcess(MethodVisitor v) {
+        Label l1 = new Label();
+        v.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/Boolean", "FALSE", "Ljava/lang/Boolean;");
+        v.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Boolean", "booleanValue", "()Z", false);
+        v.visitJumpInsn(Opcodes.IFEQ, l1);
+        v.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+        v.visitLdcInsn(Type.getType("Lcom/dodola/rocoo/Hack;"));
+        v.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/Object;)V", false);
+        v.visitLabel(l1);
+    }
+
 
     public static boolean shouldProcessPreDexJar(String path) {
         return path.endsWith("classes.jar") &&
