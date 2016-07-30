@@ -19,13 +19,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
@@ -204,83 +202,6 @@ public final class RocooFix {
     }
 
 
-    /**
-     * Locates a given field anywhere in the class inheritance hierarchy.
-     *
-     * @param instance an object to search the field into.
-     * @param name     field name
-     * @return a field object
-     * @throws NoSuchFieldException if the field cannot be located
-     */
-    private static Field findField(Object instance, String name) throws NoSuchFieldException {
-        for (Class<?> clazz = instance.getClass(); clazz != null; clazz = clazz.getSuperclass()) {
-            try {
-                Field field = clazz.getDeclaredField(name);
-
-
-                if (!field.isAccessible()) {
-                    field.setAccessible(true);
-                }
-
-                return field;
-            } catch (NoSuchFieldException e) {
-                // ignore and search next
-            }
-        }
-
-        throw new NoSuchFieldException("Field " + name + " not found in " + instance.getClass());
-    }
-
-    /**
-     * Locates a given method anywhere in the class inheritance hierarchy.
-     *
-     * @param instance       an object to search the method into.
-     * @param name           method name
-     * @param parameterTypes method parameter types
-     * @return a method object
-     * @throws NoSuchMethodException if the method cannot be located
-     */
-    private static Method findMethod(Object instance, String name, Class<?>... parameterTypes)
-            throws NoSuchMethodException {
-        for (Class<?> clazz = instance.getClass(); clazz != null; clazz = clazz.getSuperclass()) {
-            try {
-                Method method = clazz.getDeclaredMethod(name, parameterTypes);
-
-
-                if (!method.isAccessible()) {
-                    method.setAccessible(true);
-                }
-
-                return method;
-            } catch (NoSuchMethodException e) {
-                // ignore and search next
-            }
-        }
-
-        throw new NoSuchMethodException("Method " + name + " with parameters " +
-                Arrays.asList(parameterTypes) + " not found in " + instance.getClass());
-    }
-
-    /**
-     * Replace the value of a field containing a non null array, by a new array containing the
-     * elements of the original array plus the elements of extraElements.
-     *
-     * @param instance      the instance whose field is to be modified.
-     * @param fieldName     the field to modify.
-     * @param extraElements elements to append at the end of the array.
-     */
-    private static void expandFieldArray(Object instance, String fieldName,
-                                         Object[] extraElements) throws NoSuchFieldException, IllegalArgumentException,
-            IllegalAccessException {
-        Field jlrField = findField(instance, fieldName);
-        Object[] original = (Object[]) jlrField.get(instance);
-        Object[] combined = (Object[]) Array.newInstance(
-                original.getClass().getComponentType(), original.length + extraElements.length);
-        System.arraycopy(extraElements, 0, combined, 0, extraElements.length);
-        System.arraycopy(original, 0, combined, extraElements.length, original.length);
-        jlrField.set(instance, combined);
-    }
-
     private static File getDexDir(Context context, ApplicationInfo applicationInfo)
             throws IOException {
         File cache = new File(applicationInfo.dataDir, CODE_CACHE_NAME);
@@ -325,11 +246,11 @@ public final class RocooFix {
                 throws IllegalArgumentException, IllegalAccessException,
                 NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException {
 
-            Field pathListField = findField(loader, "pathList");
+            Field pathListField = RocooUtils.findField(loader, "pathList");
             Object dexPathList = pathListField.get(loader);
-            Field dexElement = findField(dexPathList, "dexElements");
+            Field dexElement = RocooUtils.findField(dexPathList, "dexElements");
             Class<?> elementType = dexElement.getType().getComponentType();
-            Method loadDex = findMethod(dexPathList, "loadDexFile", File.class, File.class);
+            Method loadDex = RocooUtils.findMethod(dexPathList, "loadDexFile", File.class, File.class);
             loadDex.setAccessible(true);
 
             Object dex = loadDex.invoke(null, additionalClassPathEntries.get(0), optimizedDirectory);
@@ -339,7 +260,7 @@ public final class RocooFix {
 
             Object[] newEles = new Object[1];
             newEles[0] = element;
-            expandFieldArray(dexPathList, "dexElements", newEles);
+            RocooUtils.expandFieldArray(dexPathList, "dexElements", newEles);
         }
 
     }
@@ -351,11 +272,11 @@ public final class RocooFix {
                 throws IllegalArgumentException, IllegalAccessException,
                 NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, ClassNotFoundException {
 
-            Field pathListField = findField(loader, "pathList");
+            Field pathListField = RocooUtils.findField(loader, "pathList");
             Object dexPathList = pathListField.get(loader);
-            Field dexElement = findField(dexPathList, "dexElements");
+            Field dexElement = RocooUtils.findField(dexPathList, "dexElements");
             Class<?> elementType = dexElement.getType().getComponentType();
-            Method loadDex = findMethod(dexPathList, "loadDexFile", File.class, File.class, ClassLoader.class, dexElement.getType());
+            Method loadDex = RocooUtils.findMethod(dexPathList, "loadDexFile", File.class, File.class, ClassLoader.class, dexElement.getType());
             loadDex.setAccessible(true);
 
             Object dex = loadDex.invoke(null, additionalClassPathEntries.get(0), optimizedDirectory, loader, dexElement.get(dexPathList));
@@ -365,7 +286,7 @@ public final class RocooFix {
 
             Object[] newEles = new Object[1];
             newEles[0] = element;
-            expandFieldArray(dexPathList, "dexElements", newEles);
+            RocooUtils.expandFieldArray(dexPathList, "dexElements", newEles);
         }
 
     }
@@ -384,10 +305,10 @@ public final class RocooFix {
              * dalvik.system.DexPathList pathList field to append additional DEX
              * file entries.
              */
-            Field pathListField = findField(loader, "pathList");
+            Field pathListField = RocooUtils.findField(loader, "pathList");
             Object dexPathList = pathListField.get(loader);
             ArrayList<IOException> suppressedExceptions = new ArrayList<IOException>();
-            expandFieldArray(dexPathList, "dexElements", makeDexElements(dexPathList,
+            RocooUtils.expandFieldArray(dexPathList, "dexElements", makeDexElements(dexPathList,
                     new ArrayList<File>(additionalClassPathEntries), optimizedDirectory,
                     suppressedExceptions));
             if (suppressedExceptions.size() > 0) {
@@ -395,7 +316,7 @@ public final class RocooFix {
                     Log.w(TAG, "Exception in makeDexElement", e);
                 }
                 Field suppressedExceptionsField =
-                        findField(dexPathList, "dexElementsSuppressedExceptions");
+                        RocooUtils.findField(dexPathList, "dexElementsSuppressedExceptions");
                 IOException[] dexElementsSuppressedExceptions =
                         (IOException[]) suppressedExceptionsField.get(dexPathList);
 
@@ -427,7 +348,7 @@ public final class RocooFix {
                 throws IllegalAccessException, InvocationTargetException,
                 NoSuchMethodException {
             Method makeDexElements =
-                    findMethod(dexPathList, "makeDexElements", ArrayList.class, File.class,
+                    RocooUtils.findMethod(dexPathList, "makeDexElements", ArrayList.class, File.class,
                             ArrayList.class);
 
             return (Object[]) makeDexElements.invoke(dexPathList, files, optimizedDirectory,
@@ -449,9 +370,9 @@ public final class RocooFix {
              * dalvik.system.DexPathList pathList field to append additional DEX
              * file entries.
              */
-            Field pathListField = findField(loader, "pathList");
+            Field pathListField = RocooUtils.findField(loader, "pathList");
             Object dexPathList = pathListField.get(loader);
-            expandFieldArray(dexPathList, "dexElements", makeDexElements(dexPathList,
+            RocooUtils.expandFieldArray(dexPathList, "dexElements", makeDexElements(dexPathList,
                     new ArrayList<File>(additionalClassPathEntries), optimizedDirectory));
         }
 
@@ -464,7 +385,7 @@ public final class RocooFix {
                 throws IllegalAccessException, InvocationTargetException,
                 NoSuchMethodException {
             Method makeDexElements =
-                    findMethod(dexPathList, "makeDexElements", ArrayList.class, File.class);
+                    RocooUtils.findMethod(dexPathList, "makeDexElements", ArrayList.class, File.class);
 
             return (Object[]) makeDexElements.invoke(dexPathList, files, optimizedDirectory);
         }
@@ -484,7 +405,7 @@ public final class RocooFix {
              */
             int extraSize = additionalClassPathEntries.size();
 
-            Field pathField = findField(loader, "path");
+            Field pathField = RocooUtils.findField(loader, "path");
 
             StringBuilder path = new StringBuilder((String) pathField.get(loader));
             String[] extraPaths = new String[extraSize];
@@ -504,10 +425,10 @@ public final class RocooFix {
             }
 
             pathField.set(loader, path.toString());
-            expandFieldArray(loader, "mPaths", extraPaths);
-            expandFieldArray(loader, "mFiles", extraFiles);
-            expandFieldArray(loader, "mZips", extraZips);
-            expandFieldArray(loader, "mDexs", extraDexs);
+            RocooUtils.expandFieldArray(loader, "mPaths", extraPaths);
+            RocooUtils.expandFieldArray(loader, "mFiles", extraFiles);
+            RocooUtils.expandFieldArray(loader, "mZips", extraZips);
+            RocooUtils.expandFieldArray(loader, "mDexs", extraDexs);
         }
     }
 
