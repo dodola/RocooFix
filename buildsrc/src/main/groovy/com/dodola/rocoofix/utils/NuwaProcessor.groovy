@@ -109,6 +109,7 @@ class NuwaProcessor {
             }
 //            optJar.renameTo(jarFile)
             org.apache.commons.io.FileUtils.copyFile(optJar,jarFile);
+            org.apache.commons.io.FileUtils.deleteQuietly(optJar)
         }
 
     }
@@ -151,8 +152,9 @@ class NuwaProcessor {
         cr.accept(cv, 0);
         if (!hasHackSuccess && !isInterface) {
             // has not hack and not interface
-            // 第二次尝试hack
-            return addCinitAndHack(cr,cw);
+            // 第二次尝试hack  这个有问题 先关闭 
+            //return addCinitAndHack(cr,cw);
+            return cw.toByteArray();
         } else {
             return cw.toByteArray();
         }
