@@ -22,7 +22,7 @@ https://github.com/shoyu666/derocoodemo
   2. 动态修复，无需重启应用即可生效。
 * **支持DalvikVM和ART VM**
 * 制作补丁更加方便
-* 支持`com.android.tools.build:gradle:1.3.0`->`com.android.tools.build:gradle:2.1.0` (解决了Nuwa 这个[issue][1])
+* 支持`com.android.tools.build:gradle:1.3.0`->`com.android.tools.build:gradle:2.1.2` (解决了Nuwa 这个[issue][1])
 * 支持混淆和Mulitdex
 * 无需关注`hash.txt`和`mapping.txt`文件的生成和保存
 
@@ -84,7 +84,7 @@ RocooFix.applyPatchRuntime(Context context, String dexPath)  ;
         jcenter()
     }
  dependencies {
-        classpath 'com.dodola:rocoofix:1.2.2’
+        classpath 'com.dodola:rocoofix:1.2.6’
     }
 ```
 2 在你项目的`build.gradle`文件里添加如下配置
