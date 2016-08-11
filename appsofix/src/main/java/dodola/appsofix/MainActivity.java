@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import com.example.hellojni.HelloJni;
 
+/**
+ * Created by shoyu666 on 16/8/11.
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -16,13 +19,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         TextView test = (TextView)this.findViewById(R.id.test);
+        TextView source = (TextView)this.findViewById(R.id.source);
+        source.setText("从"+SoFileUtil.getSDCardSoPath().getAbsolutePath());
+        TextView copyfrom = (TextView)this.findViewById(R.id.copyfrom);
+        copyfrom.setText("拷贝到"+SoFileUtil.getDataFileSoPath(this).getAbsolutePath());
         String jniStr=null;
         try {
             jniStr=HelloJni.stringFromJNI();
-            test.setText(jniStr);
+            test.setText("读取so内容["+jniStr+"]");
         } catch (UnsatisfiedLinkError e) {
             e.printStackTrace();
-            test.setText(e.getMessage());
+            test.setText("错误 "+e.getMessage());
         }
     }
 }

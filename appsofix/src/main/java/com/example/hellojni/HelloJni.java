@@ -15,6 +15,12 @@
  */
 package com.example.hellojni;
 
+/**
+ * copy from android ndk sample
+ * doc文件夹下包含所有编译好的so
+ * fixafter:内容是rocoo so  修复后。。。
+ * fixbefore:内容是rocoo so 修复前。。。
+ */
 public class HelloJni {
 
     public static native String  stringFromJNI();

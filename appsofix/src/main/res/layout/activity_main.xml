@@ -9,9 +9,15 @@
     tools:context="dodola.appsofix.MainActivity"
     android:orientation="vertical">
     <TextView
+        android:id="@+id/source"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="sdcard/armeabi-v7a/libhello-jni.so" />
+       />
+    <TextView
+        android:id="@+id/copyfrom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
     <TextView
         android:id="@+id/test"
         android:layout_width="wrap_content"
