@@ -20,6 +20,7 @@ https://github.com/shoyu666/derocoodemo
 * **支持两种模式**：
   1. 静态修复某种情况下需要重启应用。
   2. 动态修复，无需重启应用即可生效。
+  3. 新增so修复，beta中
 * **支持DalvikVM和ART VM**
 * 制作补丁更加方便
 * 支持`com.android.tools.build:gradle:1.3.0`->`com.android.tools.build:gradle:2.1.2` (解决了Nuwa 这个[issue][1])
@@ -38,7 +39,7 @@ public class RocooApplication extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        //打补丁
+        //初始化
         RocooFix.init(this);
     }
 }
@@ -74,6 +75,17 @@ RocooFix.initPathFromAssetsRuntime(Context context, String assetName) ;
  * @param dexPath
  */ 
 RocooFix.applyPatchRuntime(Context context, String dexPath)  ;
+
+
+/**
+ *  
+ *  new Feature  beta 中
+ * 从指定目录加载so补丁，使用so还需调用System.loadLibrary("xx")
+ * @param context
+ * @param soDirPath  so补丁路径(这里是dir)
+ */ 
+ RocooSoFix.applyPatch(Context context, String soDirPath);
+
 ```
 
 ## Configuration
