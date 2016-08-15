@@ -2,6 +2,7 @@ package dodola.appsofix;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Build;
 
 import com.dodola.rocoofix.RocooSoFix;
 
@@ -19,14 +20,14 @@ public class SoFixApplication extends Application{
         super.attachBaseContext(base);
         try {
             //删除之前的so
-            SoFileUtil.getDataFileSoPath(base).delete();
-            //sdcard/libhello-jni.so  copy to getDataFileSoPath()
+            SoFileUtil.getDataFileSoPatchForInstall(base).delete();
+            //sdcard/libhello-jni-{cpu}.so  copy to getDataFileSoPath()
             //拷贝sd卡 so到data目录
-            FileUtils.copyFileToDirectory(new File(SoFileUtil.getSDCardSoPath(),"libhello-jni.so"),SoFileUtil.getDataFileSoPath(base));
+            FileUtils.copyFileToDirectory(new File(SoFileUtil.getSDCardSoPath(),SoFileUtil.getFullSoName("libhello-jni")),SoFileUtil.getDataFileSoPatchForInstall(base));
         } catch (IOException e) {
             e.printStackTrace();
         }
         //install data目录的so路径
-        RocooSoFix.applyPatch(base,SoFileUtil.getDataFileSoPath(base).getAbsolutePath());
+        RocooSoFix.applyPatch(base,SoFileUtil.getDataFileSoPatchForInstall(base).getAbsolutePath());
     }
 }
