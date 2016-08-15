@@ -1,6 +1,7 @@
 package dodola.appsofix;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Environment;
 
 import java.io.File;
@@ -11,31 +12,28 @@ import java.io.File;
 
 public class SoFileUtil {
 
+
+    /**
+     *
+     * @param libname  比如  libhello-jni
+     * @return  libhello-jni-armbi.so
+     */
+    public static String getFullSoName(String libname){
+        return libname+"-"+Build.CPU_ABI+".so";
+    }
     /**
      * so 安装根目录
      * @param base
      * @return
      */
     public static File getDataFileSoPatchForInstall(Context base){
-        File dir =new File(base.getFilesDir().getAbsolutePath()+File.separator+"lib"+File.separator);
+        File dir =new File(base.getFilesDir().getAbsolutePath()+File.separator+"rocoolib"+File.separator);
         if(!dir.exists()){
             dir.mkdirs();
         }
         return dir;
     }
 
-    /**
-     * 获得so 安装目录
-     * @param base
-     * @return
-     */
-    public static File getDataFileSoPath(Context base){
-        File dir =new File(getDataFileSoPatchForInstall(base),"armeabi-v7a"+File.separator);
-        if(!dir.exists()){
-            dir.mkdirs();
-        }
-        return dir;
-    }
 
     /**
      * lib 文件存放地址  sdcard/libhello-jni.so
