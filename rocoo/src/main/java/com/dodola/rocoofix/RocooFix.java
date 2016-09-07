@@ -582,7 +582,7 @@ public final class RocooFix {
 
         try {
 
-            Method originMethod = aClass.getMethod(fixMethod.getName(), fixMethod.getParameterTypes());
+            Method originMethod = aClass.getDeclaredMethod(fixMethod.getName(), fixMethod.getParameterTypes());
             HookManager.getDefault().hookMethod(originMethod, fixMethod);
         } catch (Exception e) {
             Log.e(TAG, "replaceMethod", e);
