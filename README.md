@@ -2,6 +2,9 @@
 
 Another hotfix framework
 
+## update
+新写了一个框架原理与美团robust框架类似，具体看这里:[**AnoleFix**](https://github.com/dodola/AnoleFix)
+
 之前的HotFix项目太过简单，也有很多同学用Nuwa遇到很多问题，作者也不再修复，所以重新构建了一套工具。
 
 ![](images/device-2016-05-28-010835.png)
